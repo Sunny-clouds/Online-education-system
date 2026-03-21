@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onik.eduspring.mapper.DiscussionMapper">
+
+
+    <!--添加帖子信息-->
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into discussion_post(user_id, course_id, title, content, like_count, comment_count,is_top, status, create_time)
+        values (#{userId},#{courseId}, #{title},#{content},#{likeCount},#{commentCount},#{isTop},#{status},#{createTime})
+    </insert>
+
+    <!--添加帖子下的评论-->
+    <insert id="saveComment">
+        insert into discussion_comment(post_id, user_id, parent_id, content, like_count,status, create_time)
+        values (#{postId},#{userId},#{parentId},#{content},#{likeCount},#{status},#{createTime})
+    </insert>
+
+    <!--更新帖子评论数（新增评论时）-->
+    <update id="updateCount">
+        update discussion_post
+        set comment_count = comment_count + 1
+        where id = #{id}
+    </update>
+
+    <!--根据标题查询帖子-->
+    <select id="getByTitle" resultType="com.onik.eduspring.vo.DiscussionVo">
+        select discussion_post.id,u.nickname as username,title,content,like_count,comment_count,is_top,discussion_post.status,discussion_post.create_time
+        from discussion_post
+        left join `user` u on discussion_post.user_id = u.id
+        where title LIKE CONCAT('%', #{title}, '%')
+    </select>
+
+    <!--获取所有讨论信息-->
+    <select id="getAll" resultType="com.onik.eduspring.vo.DiscussionVo">
+        SELECT d.id,u.nickname as username,c.title as courseName,d.title,d.content,d.like_count,d.comment_count,d.create_time
+        FROM discussion_post d
+        LEFT JOIN `user` u on d.user_id = u.id
+        left join course c on d.course_id = c.id
+    </select>
+
+    <!--根据课程名称查询讨论信息-->
+    <select id="getByCourseName" resultType="com.onik.eduspring.vo.DiscussionVo">
+        SELECT d.id,u.nickname as username,c.title as courseName,d.title,d.content,d.like_count,d.comment_count,d.create_time
+        FROM discussion_post d
+        LEFT JOIN `user` u on d.user_id = u.id
+        left join course c on d.course_id = c.id
+        where c.title LIKE CONCAT('%', #{courseName}, '%')
+    </select>
+
+    <!--根据帖子id查询帖子下的评论-->
+    <select id="getByPostId" resultType="com.onik.eduspring.vo.DiscussionCommentVo">
+        SELECT c.id,c.post_id,c.user_id,u.nickname,u.avatar,c.parent_id,c.content,c.like_count,c.create_time
+        FROM discussion_comment c
+        LEFT JOIN user u ON c.user_id = u.id
+        WHERE c.post_id = #{id}
+        AND c.status = 1
+        ORDER BY c.create_time ASC
+    </select>
+
+</mapper>

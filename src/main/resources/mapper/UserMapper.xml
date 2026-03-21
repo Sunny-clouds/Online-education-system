@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.onik.eduspring.mapper.UserMapper">
+
+    <!--添加用户-->
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into user(username,password,nickname,email,phone,role,avatar) values(#{username},#{password},#{nickname},#{email},#{phone},#{role},#{avatar})
+    </insert>
+    <!--修改用户信息-->
+    <update id="update">
+        update user set nickname = #{nickname},email = #{email},phone = #{phone},avatar = #{avatar},update_time = #{updateTime} where id = #{id}
+    </update>
+    <!--修改密码-->
+    <update id="updateById">
+        update user set password = #{password} where id = #{id}
+    </update>
+</mapper>
