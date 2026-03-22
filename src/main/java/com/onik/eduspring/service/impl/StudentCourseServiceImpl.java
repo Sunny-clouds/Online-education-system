@@ -12,6 +12,7 @@ import com.onik.eduspring.vo.StudentCourseVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,6 +51,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
      * 根据选课id删除选课信息
      * @param id
      */
+    @Transactional
     @Override
     public void delByUserName(Long id) {
         studentCourseMapper.delByUserName(id);
@@ -59,6 +61,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
      * 添加选课信息
      * @param studentCourseDto
      */
+    @Transactional
     @Override
     public void save(StudentCourseDto studentCourseDto) {
         StudentCourse studentCourse = new StudentCourse();
@@ -74,6 +77,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
      * @param statusDto
      */
     @Override
+    @Transactional
     public void update(StudentCourseStatusDto statusDto) {
         StudentCourse studentCourse = new StudentCourse();
         BeanUtils.copyProperties(statusDto, studentCourse);

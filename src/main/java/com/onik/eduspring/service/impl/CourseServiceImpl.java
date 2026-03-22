@@ -8,16 +8,15 @@ import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.mapper.CourseMapper;
 import com.onik.eduspring.service.CourseService;
 import com.onik.eduspring.vo.CourseVo;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@Slf4j
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
@@ -50,6 +49,7 @@ public class CourseServiceImpl implements CourseService {
      * 添加课程信息
      * @param courseDto
      */
+    @Transactional
     public void save(CourseDto courseDto) {
         Course course = new Course();
         BeanUtils.copyProperties(courseDto, course);
@@ -61,6 +61,7 @@ public class CourseServiceImpl implements CourseService {
      * 修改课程信息
      * @param course
      */
+    @Transactional
     public void update(Course course) {
         courseMapper.update(course);
     }
@@ -69,6 +70,7 @@ public class CourseServiceImpl implements CourseService {
      * 根据id删除课程信息
      * @param id
      */
+    @Transactional
     public void delById(Long id) {
         courseMapper.delById(id);
     }

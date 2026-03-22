@@ -15,8 +15,8 @@ public class VideoFileStrategy implements FileStrategy {
             throw new RuntimeException("只支持MP4视频");
         }
 
-        if (file.getSize() > 200 * 1024 * 1024) {
-            throw new RuntimeException("视频不能超过200MB");
+        if (file.getSize() > 500 * 1024 * 1024) {
+            throw new RuntimeException("视频不能超过500MB");
         }
     }
 }

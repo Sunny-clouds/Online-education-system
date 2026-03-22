@@ -38,7 +38,7 @@
 
     <!--根据学生姓名模糊查询选课信息-->
     <select id="getByUserName" resultType="com.onik.eduspring.vo.StudentCourseVo">
-        SELECT sc.id ,u.nickname AS user_name,c.title ,t.nickname AS teacher_name,sc.select_time,sc.status,sc.progress
+        SELECT sc.id ,u.nickname AS user_name,c.title, sc.course_id,t.nickname AS teacher_name,sc.select_time,sc.status,sc.progress
         FROM student_course sc
         LEFT JOIN user u ON sc.student_id = u.id
         LEFT JOIN course c ON sc.course_id = c.id

@@ -7,13 +7,12 @@ import com.onik.eduspring.mapper.AdminMapper;
 import com.onik.eduspring.mapper.StudentCourseMapper;
 import com.onik.eduspring.service.AdminService;
 import com.onik.eduspring.vo.UserVo;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Slf4j
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -47,6 +46,7 @@ public class AdminServiceImpl implements AdminService {
      * @param id
      */
     @Override
+    @Transactional
     public void delById(Long id) {
         studentCourseMapper.delByStudentId(id);
         adminMapper.delById(id);

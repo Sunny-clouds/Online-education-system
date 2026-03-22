@@ -3,7 +3,6 @@ package com.onik.eduspring.controller.admin;
 import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.AdminService;
-import com.onik.eduspring.service.UserService;
 import com.onik.eduspring.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin")
 public class AdminController {
 
-    @Autowired
-    private UserService userService;
     @Autowired
     private AdminService adminService;
 

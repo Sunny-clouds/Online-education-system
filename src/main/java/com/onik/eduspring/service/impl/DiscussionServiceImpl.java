@@ -13,6 +13,7 @@ import com.onik.eduspring.vo.DiscussionVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,11 +36,13 @@ public class DiscussionServiceImpl implements DiscussionService {
     }
 
     //根据id删除帖子
+    @Transactional
     public void delById(Long id) {
         discussionMapper.delById(id);
     }
 
     //添加帖子
+    @Transactional
     public void save(Discussion discussion) {
         discussion.setLikeCount(0L);
         discussion.setCommentCount(0L);
@@ -99,9 +102,9 @@ public class DiscussionServiceImpl implements DiscussionService {
         }
     }
 
-
     //回复帖子
     @Override
+    @Transactional
     public void saveComment(DiscussionCommentDto discussionCommentDto) {
         DiscussionComment discussionComment = new DiscussionComment();
         BeanUtils.copyProperties(discussionCommentDto, discussionComment);
@@ -113,17 +116,30 @@ public class DiscussionServiceImpl implements DiscussionService {
         discussionMapper.updateCount(discussionCommentDto.getPostId());
     }
 
+    /**
+     * 更新帖子点赞数
+     * @param id
+     */
     @Override
     public void updatePostLike(Long id) {
         discussionMapper.updatePostLike(id);
     }
 
+    /**
+     * 更新评论点赞数
+     * @param id
+     */
     @Override
     public void updateCommentLike(Long id) {
         discussionMapper.updateCommentLike(id);
     }
 
+    /**
+     * 根据id删除评论
+     * @param id
+     */
     @Override
+    @Transactional
     public void delComment(Long id) {
         discussionMapper.delComment(id);
     }

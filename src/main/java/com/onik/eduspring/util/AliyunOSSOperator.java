@@ -1,6 +1,7 @@
 package com.onik.eduspring.util;
 
 import com.aliyun.sdk.service.oss2.OSSClient;
+import com.aliyun.sdk.service.oss2.models.DeleteObjectRequest;
 import com.aliyun.sdk.service.oss2.models.PutObjectRequest;
 import com.aliyun.sdk.service.oss2.transport.BinaryData;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +22,8 @@ public class AliyunOSSOperator {
 
     @Autowired
     private OSSClient ossClient;
-
     @Autowired
     private String bucketName;
-
     @Value("${aliyun.endpoint}")
     private String endpoint;
 
@@ -107,6 +106,39 @@ public class AliyunOSSOperator {
                 return "docs";
             default:
                 throw new RuntimeException("未知文件类型：" + type);
+        }
+    }
+
+    /**
+     * 删除 OSS 上的文件
+     * @param fileUrl 文件完整访问 URL
+     * @return 删除是否成功
+     */
+    public boolean delete(String fileUrl) {
+        if (fileUrl == null || fileUrl.trim().isEmpty()) {
+            log.warn("文件 URL 为空，无法删除");
+            return false;
+        }
+
+        try {
+            // 从 URL 解析出 objectName
+            String cleanEndpoint = endpoint.replace("https://", "").replace("http://", "");
+            String prefix = "https://" + bucketName + "." + cleanEndpoint + "/";
+            if (!fileUrl.startsWith(prefix)) {
+                log.warn("URL 与存储桶不匹配: {}", fileUrl);
+                return false;
+            }
+            String objectName = fileUrl.substring(prefix.length());
+
+            // 调用 OSS SDK 删除文件
+            ossClient.deleteObject(DeleteObjectRequest.newBuilder().bucket(bucketName)
+                    .key(objectName)
+                    .build());
+            log.info("OSS 文件删除成功: {}", objectName);
+            return true;
+        } catch (Exception e) {
+            log.error("OSS 文件删除失败: {}", fileUrl, e);
+            return false;
         }
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onik.eduspring.mapper.CourseResourceMapper">
+
+
+    <!--上传课程资源-->
+    <insert id="save">
+        insert into course_resource(course_id, name, url, type, size, duration, upload_user, create_time)
+        values(#{courseId}, #{name}, #{url}, #{type}, #{size}, #{duration}, #{userId}, #{createTime})
+    </insert>
+
+    <!--根据资源id删除课程资源-->
+    <delete id="delCourseResourceById">
+        delete from course_resource where id = #{id}
+    </delete>
+
+    <!--根据课程id获取课程资源-->
+    <select id="getCourseResourceById" resultType="com.onik.eduspring.vo.CourseResourceVo">
+        select c.id, c.name, c.url,c.type, c.size, c.duration, u.nickname, c.create_time
+        from course_resource c
+        left join user u on c.upload_user = u.id
+        where course_id = #{id}
+    </select>
+</mapper>

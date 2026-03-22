@@ -1,20 +1,17 @@
-package com.onik.eduspring.entity;
+package com.onik.eduspring.dto;
+
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
-/**
- * 课程资源实体类
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseResource {
+@Builder
+public class CourseResourceDto {
 
-    private Long id;
     private Long courseId;
     private String name;
     private String url;
@@ -22,5 +19,4 @@ public class CourseResource {
     private Long size;
     private Long duration;
     private Long userId;
-    private LocalDateTime createTime;
 }

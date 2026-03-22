@@ -12,6 +12,7 @@ import com.onik.eduspring.vo.ScoreVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,10 @@ public class ScoreServiceImpl implements ScoreService {
     @Autowired
     private ScoreMapper scoreMapper;
 
+    /**
+     * 分页查询所有学生科目的成绩信息
+     * @return
+     */
     @Override
     public PageResult<ScoreVo> getAll(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -29,12 +34,22 @@ public class ScoreServiceImpl implements ScoreService {
         return new PageResult<ScoreVo>(p.getTotal(),p.getList());
     }
 
+    /**
+     * 根据学生姓名查询成绩
+     * @param username
+     * @return
+     */
     @Override
     public List<ScoreVo> getScoreByUserName(String username) {
         List<ScoreVo> scores = scoreMapper.getScoreByUserName(username);
         return scores;
     }
 
+    /**
+     * 根据课程名查询成绩
+     * @param title
+     * @return
+     */
     @Override
     public PageResult<ScoreVo> getScoreByTitle(String title,Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -43,7 +58,13 @@ public class ScoreServiceImpl implements ScoreService {
         return new PageResult<>(p.getTotal(),p.getList());
     }
 
+    /**
+     * 修改成绩
+     * @param scoredto
+     * @return
+     */
     @Override
+    @Transactional
     public void setScore(ScoreDto scoredto) {
         Score score = new Score();
         BeanUtils.copyProperties(scoredto,score);
