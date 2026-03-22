@@ -14,5 +14,3 @@
 - 学习进度记录
 - 评论系统
 
-## 前端地址
-https://github.com/Sunny-clouds/vue-eduspring
