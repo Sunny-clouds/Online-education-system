@@ -18,7 +18,6 @@ public class StudentCourseVo {
     private String title;
     private Long courseId;
     private String teacherName;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime selectTime;
     private Long status;
     private Long progress;

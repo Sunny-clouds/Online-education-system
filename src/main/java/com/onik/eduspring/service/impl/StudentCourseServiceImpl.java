@@ -7,8 +7,11 @@ import com.onik.eduspring.dto.StudentCourseStatusDto;
 import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.entity.StudentCourse;
 import com.onik.eduspring.mapper.StudentCourseMapper;
+import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.StudentCourseService;
 import com.onik.eduspring.vo.StudentCourseVo;
+import com.onik.eduspring.vo.StudentsCourseVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 public class StudentCourseServiceImpl implements StudentCourseService {
 
     @Autowired
@@ -63,13 +67,18 @@ public class StudentCourseServiceImpl implements StudentCourseService {
      */
     @Transactional
     @Override
-    public void save(StudentCourseDto studentCourseDto) {
-        StudentCourse studentCourse = new StudentCourse();
-        BeanUtils.copyProperties(studentCourseDto, studentCourse);
-        studentCourse.setSelectTime(LocalDateTime.now());
-        studentCourse.setStatus(1L);
-        studentCourse.setProgress(0L);
-        studentCourseMapper.save(studentCourse);
+    public Result save(StudentCourseDto studentCourseDto) {
+        StudentCourse student = studentCourseMapper.getByIdAndCourseId(studentCourseDto);
+        if (student == null) {
+            StudentCourse studentCourse = new StudentCourse();
+            BeanUtils.copyProperties(studentCourseDto, studentCourse);
+            studentCourse.setSelectTime(LocalDateTime.now());
+            studentCourse.setStatus(1L);
+            studentCourse.setProgress(0L);
+            studentCourseMapper.save(studentCourse);
+            return Result.success();
+        }
+        return Result.error("已经选过了，不能再选了");
     }
 
     /**
@@ -90,5 +99,18 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         }
         studentCourse.setSelectTime(LocalDateTime.now());
         studentCourseMapper.update(studentCourse);
+    }
+
+    /**
+     * 根据选课课程id查询所有学生
+     * @param id
+     * @return
+     */
+    @Override
+    public PageResult<StudentsCourseVo> getCourseById(Long id,Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<StudentsCourseVo> list = studentCourseMapper.getCourseById(id);
+        PageInfo<StudentsCourseVo> p = new PageInfo<>(list);
+        return new PageResult<>(p.getTotal(),p.getList());
     }
 }

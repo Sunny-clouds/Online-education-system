@@ -6,18 +6,18 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseResourceVo {
-
+public class ActivityVo {
     private Long id;
-    private String name;
-    private String url;
-    private String coverUrl;
-    private String type;
-    private Long size;
-    private Long duration;
-    private String nickname;
+    private String title;
+    private Double score;
     private LocalDateTime createTime;
+    private Integer commentCount;
+    private Integer type;
+    private Integer status;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 }

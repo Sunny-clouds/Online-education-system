@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 接收课程请求
  */
@@ -82,6 +84,16 @@ public class CourseController {
         courseService.delById(id);
         System.out.println("删除课程成功:" + id);
         return Result.success();
+    }
+
+    /**
+     * 根据教师id查询课程信息
+     * @return
+     */
+    @GetMapping("/getByTeaId/{id}")
+    public Result getCourseByTeaId(@PathVariable Long id){
+        List<CourseVo> courseVo = courseService.getCourseByTeaId(id);
+        return Result.success(courseVo);
     }
 
 }

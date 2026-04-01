@@ -61,12 +61,6 @@ public interface DiscussionMapper {
     void saveComment(DiscussionComment discussionComment);
 
     /**
-     * 更新帖子评论数
-     * @param id
-     */
-    void updateCount(Long id);
-
-    /**
      * 更新帖子点赞数
      * @param id
      */

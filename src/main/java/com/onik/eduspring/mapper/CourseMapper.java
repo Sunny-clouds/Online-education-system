@@ -45,4 +45,14 @@ public interface CourseMapper {
      */
     @Delete("delete from course where id = #{id}")
     void delById(Long id);
+
+    /**
+     * 根据教师id查询课程信息
+     * @param id
+     * @return
+     */
+    @Select("select c.id, title, description, cover,u.nickname as teachername, c.create_time " +
+            "from course c " +
+            "left join user u on c.teacher_id = u.id where c.teacher_id = #{id}")
+    List<CourseVo> getCourseByTeaId(Long id);
 }

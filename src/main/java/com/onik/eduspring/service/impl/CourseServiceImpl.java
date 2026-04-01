@@ -74,4 +74,14 @@ public class CourseServiceImpl implements CourseService {
     public void delById(Long id) {
         courseMapper.delById(id);
     }
+
+    /**
+     * 根据教师id查询课程信息
+     * @param id
+     * @return
+     */
+    @Override
+    public List<CourseVo> getCourseByTeaId(Long id) {
+        return courseMapper.getCourseByTeaId(id);
+    }
 }

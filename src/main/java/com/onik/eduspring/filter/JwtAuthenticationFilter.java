@@ -17,7 +17,6 @@ import java.util.List;
 
 /**
  * JWT认证过滤器
- *
  * 作用：
  * 1、每次请求都会进入该过滤器
  * 2、从请求头中获取token

@@ -3,7 +3,9 @@ package com.onik.eduspring.service;
 import com.onik.eduspring.dto.StudentCourseDto;
 import com.onik.eduspring.dto.StudentCourseStatusDto;
 import com.onik.eduspring.entity.PageResult;
+import com.onik.eduspring.result.Result;
 import com.onik.eduspring.vo.StudentCourseVo;
+import com.onik.eduspring.vo.StudentsCourseVo;
 
 import java.util.List;
 
@@ -31,11 +33,18 @@ public interface StudentCourseService {
      * 添加选课信息
      * @param studentCourseDto
      */
-    void save(StudentCourseDto studentCourseDto);
+    Result save(StudentCourseDto studentCourseDto);
 
     /**
      * 修改选课进度
      * @param statusDto
      */
     void update(StudentCourseStatusDto statusDto);
+
+    /**
+     * 根据选课课程id查询所有学生
+     * @param id
+     * @return
+     */
+    PageResult<StudentsCourseVo> getCourseById(Long id,Integer pageNum, Integer pageSize);
 }

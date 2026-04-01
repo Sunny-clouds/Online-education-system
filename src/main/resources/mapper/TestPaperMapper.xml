@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onik.eduspring.mapper.TestPaperMapper">
+
+    <!--获取试卷信息-->
+    <select id="getTestPaperById">
+        SELECT  q.id,q.type,q.content,q.option_a,q.option_b,q.option_c,q.option_d,q.correct_answer,q.analysis,pq.score AS paper_score,pq.sort
+        FROM test_paper tp
+        JOIN paper_question pq ON tp.id = pq.paper_id
+        JOIN question q ON pq.question_id = q.id
+        WHERE tp.id = #{id}
+        ORDER BY pq.sort ASC;
+    </select>
+</mapper>

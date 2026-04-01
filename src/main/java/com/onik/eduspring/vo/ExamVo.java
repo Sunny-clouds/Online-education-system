@@ -1,6 +1,5 @@
 package com.onik.eduspring.vo;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,14 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiscussionVo {
+public class ExamVo {
 
     private Long id;
-    private String username;
-    private String courseName;
+    private Long paperId;
     private String title;
-    private String content;
-    private Long likeCount;
-    private Integer commentCount;
-    private String createTime;
+    private String duration;
+    private Integer totalScore;
+    private Integer allowRetake;
+    private Integer maxAttempt;
+    private Integer showResult;
 }

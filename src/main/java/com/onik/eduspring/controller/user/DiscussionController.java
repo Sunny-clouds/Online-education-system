@@ -1,7 +1,7 @@
 package com.onik.eduspring.controller.user;
 
 import com.onik.eduspring.dto.DiscussionCommentDto;
-import com.onik.eduspring.entity.Discussion;
+import com.onik.eduspring.dto.DiscussionDto;
 import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.DiscussionService;
@@ -49,12 +49,12 @@ public class DiscussionController {
 
     /**
      * 添加帖子
-     * @param discussion
+     * @param discussionDto
      * @return
      */
     @PostMapping("/save")
-    public Result save(@RequestBody Discussion discussion){
-        discussionService.save(discussion);
+    public Result save(@RequestBody DiscussionDto discussionDto){
+        discussionService.save(discussionDto);
         return Result.success();
     }
 

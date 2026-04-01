@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onik.eduspring.mapper.ExamMapper">
+
+    <!--查询活动下的考试信息-->
+    <select id="getExamByActivityId" resultType="com.onik.eduspring.vo.ExamVo" parameterType="java.lang.Long">
+        SELECT e.id, e.paper_id,t.title, e.duration, e.total_score, e.allow_retake, e.max_attempt, e.show_result
+        FROM exam e
+        left join test_paper t on e.paper_id = t.id
+        WHERE activity_id = #{activityId}
+    </select>
+
+    <!--保存考试信息-->
+    <insert id="saveExam" parameterType="com.onik.eduspring.entity.Exam">
+        INSERT INTO exam (activity_id, paper_id, duration, total_score, allow_retake, max_attempt, show_result, create_time)
+        VALUES (#{activityId}, #{paperId}, #{duration}, #{totalScore}, #{allowRetake}, #{maxAttempt}, #{showResults},#{createTime})
+    </insert>
+
+    <!--修改考试信息-->
+    <update id="updateExam" parameterType="com.onik.eduspring.entity.Exam">
+        UPDATE exam
+        <set>
+            <if test="paperId != null">paper_id = #{paperId},</if>
+            <if test="duration != null">duration = #{duration},</if>
+            <if test="totalScore != null">total_score = #{totalScore},</if>
+            <if test="allowRetake != null">allow_retake = #{allowRetake},</if>
+            <if test="maxAttempt != null">max_attempt = #{maxAttempt},</if>
+            <if test="showResults != null">show_result = #{showResults}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

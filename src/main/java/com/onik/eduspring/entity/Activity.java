@@ -7,20 +7,21 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * 帖子实体类
+ * 活动实体类
  */
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Discussion {
+@NoArgsConstructor
+public class Activity {
 
     private Long id;
-    private Long userId;
     private Long courseId;
     private String title;
-    private String content;
-    private Long likeCount;
-    private Long isTop;
-    private Long status;
+    private Integer type;
+    private Integer status;
+    private Double score;
     private LocalDateTime createTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 }

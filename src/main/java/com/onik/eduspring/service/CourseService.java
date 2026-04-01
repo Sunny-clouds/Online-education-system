@@ -5,6 +5,8 @@ import com.onik.eduspring.entity.Course;
 import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.vo.CourseVo;
 
+import java.util.List;
+
 public interface CourseService {
 
 
@@ -38,4 +40,11 @@ public interface CourseService {
      * @param id
      */
     void delById(Long id);
+
+    /**
+     * 根据教师id查询课程信息
+     * @param id
+     * @return
+     */
+    List<CourseVo> getCourseByTeaId(Long id);
 }

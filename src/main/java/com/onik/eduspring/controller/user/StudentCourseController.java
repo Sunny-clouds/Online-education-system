@@ -7,6 +7,7 @@ import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.StudentCourseService;
 import com.onik.eduspring.vo.StudentCourseVo;
+import com.onik.eduspring.vo.StudentsCourseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -64,8 +65,7 @@ public class StudentCourseController {
      */
     @PostMapping("/save")
     public Result save(@RequestBody StudentCourseDto studentCourseDto){
-        studentCourseService.save(studentCourseDto);
-        return Result.success();
+        return studentCourseService.save(studentCourseDto);
     }
 
     /**
@@ -77,5 +77,16 @@ public class StudentCourseController {
     public Result update(@RequestBody StudentCourseStatusDto statusDto){
         studentCourseService.update(statusDto);
         return Result.success();
+    }
+
+    /**
+     * 根据选课课程id查询所有学生
+     * @return
+     */
+    @GetMapping("/getCourseById")
+    public Result getCourseById(@RequestParam Long id,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize){
+        log.info("根据选课课程id查询所有学生:{}",id);
+        PageResult<StudentsCourseVo> list = studentCourseService.getCourseById(id,pageNum, pageSize);
+        return Result.success(list);
     }
 }

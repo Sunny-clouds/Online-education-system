@@ -1,6 +1,5 @@
 package com.onik.eduspring.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +16,5 @@ public class CourseVo {
     private String description;
     private String cover;
     private String teacherName;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 }

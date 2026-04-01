@@ -3,6 +3,7 @@ package com.onik.eduspring.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.onik.eduspring.dto.DiscussionCommentDto;
+import com.onik.eduspring.dto.DiscussionDto;
 import com.onik.eduspring.entity.Discussion;
 import com.onik.eduspring.entity.DiscussionComment;
 import com.onik.eduspring.entity.PageResult;
@@ -43,9 +44,10 @@ public class DiscussionServiceImpl implements DiscussionService {
 
     //添加帖子
     @Transactional
-    public void save(Discussion discussion) {
+    public void save(DiscussionDto discussionDto) {
+        Discussion discussion = new Discussion();
+        BeanUtils.copyProperties(discussionDto, discussion);
         discussion.setLikeCount(0L);
-        discussion.setCommentCount(0L);
         discussion.setIsTop(0L);
         discussion.setStatus(1L);
         discussion.setCreateTime(LocalDateTime.now());
@@ -102,7 +104,10 @@ public class DiscussionServiceImpl implements DiscussionService {
         }
     }
 
-    //回复帖子
+    /**
+     * 回复帖子
+     * @param discussionCommentDto
+     */
     @Override
     @Transactional
     public void saveComment(DiscussionCommentDto discussionCommentDto) {
@@ -112,8 +117,6 @@ public class DiscussionServiceImpl implements DiscussionService {
         discussionComment.setStatus(1);
         discussionComment.setCreateTime(LocalDateTime.now());
         discussionMapper.saveComment(discussionComment);
-        //更新帖子评论数
-        discussionMapper.updateCount(discussionCommentDto.getPostId());
     }
 
     /**

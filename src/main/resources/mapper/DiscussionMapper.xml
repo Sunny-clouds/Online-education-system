@@ -5,8 +5,8 @@
 
     <!--添加帖子信息-->
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into discussion_post(user_id, course_id, title, content, like_count, comment_count,is_top, status, create_time)
-        values (#{userId},#{courseId}, #{title},#{content},#{likeCount},#{commentCount},#{isTop},#{status},#{createTime})
+        insert into discussion_post(user_id, course_id, title, content, like_count,is_top, status, create_time)
+        values (#{userId},#{courseId}, #{title},#{content},#{likeCount},#{isTop},#{status},#{createTime})
     </insert>
 
     <!--添加帖子下的评论-->
@@ -15,36 +15,35 @@
         values (#{postId},#{userId},#{parentId},#{content},#{likeCount},#{status},#{createTime})
     </insert>
 
-    <!--更新帖子评论数（新增评论时）-->
-    <update id="updateCount">
-        update discussion_post
-        set comment_count = comment_count + 1
-        where id = #{id}
-    </update>
-
     <!--根据标题查询帖子-->
     <select id="getByTitle" resultType="com.onik.eduspring.vo.DiscussionVo">
-        select discussion_post.id,u.nickname as username,title,content,like_count,comment_count,is_top,discussion_post.status,discussion_post.create_time
-        from discussion_post
-        left join `user` u on discussion_post.user_id = u.id
+        select d.id,u.nickname as username,d.title,d.content,d.like_count,d.is_top,d.status,COUNT(dc.id) AS comment_count,d.create_time
+        from discussion_post d
+        left join `user` u on d.user_id = u.id
+        LEFT JOIN discussion_comment dc ON dc.post_id = d.id
         where title LIKE CONCAT('%', #{title}, '%')
+        GROUP BY d.id
     </select>
 
     <!--获取所有讨论信息-->
     <select id="getAll" resultType="com.onik.eduspring.vo.DiscussionVo">
-        SELECT d.id,u.nickname as username,c.title as courseName,d.title,d.content,d.like_count,d.comment_count,d.create_time
+        SELECT d.id,u.nickname as username,c.title as courseName,d.title,d.content,d.like_count,COUNT(dc.id) AS comment_count,d.create_time
         FROM discussion_post d
         LEFT JOIN `user` u on d.user_id = u.id
         left join course c on d.course_id = c.id
+        LEFT JOIN discussion_comment dc ON dc.post_id = d.id
+        GROUP BY d.id
     </select>
 
     <!--根据课程名称查询讨论信息-->
     <select id="getByCourseName" resultType="com.onik.eduspring.vo.DiscussionVo">
-        SELECT d.id,u.nickname as username,c.title as courseName,d.title,d.content,d.like_count,d.comment_count,d.create_time
+        SELECT d.id,u.nickname as username,c.title as courseName,d.title,d.content,d.like_count,COUNT(dc.id) AS comment_count,d.create_time
         FROM discussion_post d
         LEFT JOIN `user` u on d.user_id = u.id
         left join course c on d.course_id = c.id
+        LEFT JOIN discussion_comment dc ON dc.post_id = d.id
         where c.title LIKE CONCAT('%', #{courseName}, '%')
+        GROUP BY d.id
     </select>
 
     <!--根据帖子id查询帖子下的评论-->

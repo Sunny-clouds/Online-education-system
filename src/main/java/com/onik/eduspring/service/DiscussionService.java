@@ -1,7 +1,7 @@
 package com.onik.eduspring.service;
 
 import com.onik.eduspring.dto.DiscussionCommentDto;
-import com.onik.eduspring.entity.Discussion;
+import com.onik.eduspring.dto.DiscussionDto;
 import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.vo.DiscussionCommentVo;
 import com.onik.eduspring.vo.DiscussionVo;
@@ -17,7 +17,7 @@ public interface DiscussionService {
     void delById(Long id);
 
     //添加帖子
-    void save(Discussion discussion);
+    void save(DiscussionDto discussionDto);
 
     //根据标题查询帖子
     PageResult<DiscussionVo> getByTitle(String title, Integer pageNum, Integer pageSize);

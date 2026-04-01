@@ -9,13 +9,13 @@
     </insert>
 
     <!--根据 id 修改课程信息-->
-    <update id="update">
+    <update id="update" parameterType="com.onik.eduspring.entity.Course">
         update course
         <set>
             <if test="title != null">title = #{title},</if>
             <if test="description != null">description = #{description},</if>
             <if test="cover != null">cover = #{cover},</if>
-            <if test="teacherId != null">teacher_id = #{teacherId},</if>
+            <if test="teacherId != null">teacher_id = #{teacherId}</if>
         </set>
         where id = #{id}
     </update>

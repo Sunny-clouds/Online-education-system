@@ -1,8 +1,10 @@
 package com.onik.eduspring.mapper;
 
 
+import com.onik.eduspring.dto.StudentCourseDto;
 import com.onik.eduspring.entity.StudentCourse;
 import com.onik.eduspring.vo.StudentCourseVo;
+import com.onik.eduspring.vo.StudentsCourseVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -46,4 +48,18 @@ public interface StudentCourseMapper {
      * @param id
      */
     void delByStudentId(Long id);
+
+    /**
+     * 根据课程id和学生id获取选课信息
+     * @param studentCourseDto
+     * @return
+     */
+    StudentCourse getByIdAndCourseId(StudentCourseDto studentCourseDto);
+
+    /**
+     * 根据选课课程id查询所有学生
+     * @param id
+     * @return
+     */
+    List<StudentsCourseVo> getCourseById(Long id);
 }
