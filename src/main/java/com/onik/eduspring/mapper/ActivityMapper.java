@@ -90,9 +90,9 @@ public interface ActivityMapper {
 
     /**
      * 获取活动开始时间
-     * @param id
+     * @param activityId
      * @return
      */
-    @Select("select start_time from activity where id = #{id}")
-    LocalDateTime getStartTime(Long id);
+    @Select("select start_time from activity where id = #{activityId}")
+    LocalDateTime getStartTime(Long activityId);
 }

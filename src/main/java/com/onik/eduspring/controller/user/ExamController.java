@@ -52,8 +52,7 @@ public class ExamController {
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @PostMapping("/updateExam")
     public Result updateExam(@RequestBody ExamDto examDto){
-        examService.updateExam(examDto);
-        return Result.success();
+        return examService.updateExam(examDto);
     }
 
 

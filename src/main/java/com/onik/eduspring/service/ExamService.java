@@ -1,6 +1,7 @@
 package com.onik.eduspring.service;
 
 import com.onik.eduspring.dto.ExamDto;
+import com.onik.eduspring.result.Result;
 import com.onik.eduspring.vo.ExamVo;
 
 public interface ExamService {
@@ -22,5 +23,5 @@ public interface ExamService {
      * 修改考试信息
      * @param examDto
      */
-    void updateExam(ExamDto examDto);
+    Result updateExam(ExamDto examDto);
 }

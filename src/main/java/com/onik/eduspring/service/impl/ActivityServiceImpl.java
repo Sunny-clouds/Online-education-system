@@ -59,14 +59,11 @@ public class ActivityServiceImpl implements ActivityService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime startTime = activityMapper.getStartTime(id);
         LocalDateTime endTime = activityMapper.getEndTime(id);
-        if (now.isBefore(startTime)) {
-            // 未开始
-            activityMapper.delById(id);
-        } else if (now.isAfter(endTime)) {
-            // 已结束
-            activityMapper.delById(id);
+        if (now.isAfter(startTime) && now.isBefore(endTime)) {
+            return Result.error("活动进行中，不能删除");
         }
-        return Result.error("活动进行中，不能删除");
+        activityMapper.delById(id);
+        return Result.success();
     }
 
     /**
@@ -96,6 +93,12 @@ public class ActivityServiceImpl implements ActivityService {
      */
     @Override
     public List<ActivityCommentVo> getCommentById(Long id) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startTime = activityMapper.getStartTime(id);
+        if (now.isBefore(startTime)) {
+            // 未开始
+            return null;
+        }
         return activityMapper.getCommentById(id);
     }
 

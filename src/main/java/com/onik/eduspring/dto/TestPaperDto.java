@@ -4,17 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExamDto {
+public class TestPaperDto {
 
     private Long id;
-    private Long activityId;
-    private Long paperId;
-    private Integer duration;
+    private String title;
+    private Long courseId;
     private Integer totalScore;
-    private Integer allowRetake;
-    private Integer maxAttempt;
-    private Integer showResult;
+    private Long createUser;
 }

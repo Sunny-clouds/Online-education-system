@@ -3,7 +3,7 @@
 <mapper namespace="com.onik.eduspring.mapper.TestPaperMapper">
 
     <!--获取试卷信息-->
-    <select id="getTestPaperById">
+    <select id="getTestPaperById" resultType="com.onik.eduspring.vo.TestPaperVo">
         SELECT  q.id,q.type,q.content,q.option_a,q.option_b,q.option_c,q.option_d,q.correct_answer,q.analysis,pq.score AS paper_score,pq.sort
         FROM test_paper tp
         JOIN paper_question pq ON tp.id = pq.paper_id
@@ -11,4 +11,9 @@
         WHERE tp.id = #{id}
         ORDER BY pq.sort ASC;
     </select>
+
+    <!--新增试卷-->
+    <insert id="saveTestPaper" parameterType="com.onik.eduspring.entity.TestPaper" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO test_paper(title,course_id,total_score,create_user,create_time) VALUES(#{title},#{courseId},#{totalScore},#{createUser},#{createTime})
+    </insert>
 </mapper>

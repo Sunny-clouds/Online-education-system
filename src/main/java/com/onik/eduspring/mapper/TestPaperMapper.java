@@ -1,6 +1,7 @@
 package com.onik.eduspring.mapper;
 
 
+import com.onik.eduspring.entity.TestPaper;
 import com.onik.eduspring.vo.TestPaperVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,4 +16,10 @@ public interface TestPaperMapper {
      * @return
      */
     List<TestPaperVo> getTestPaperById(Long id);
+
+    /**
+     * 新增试卷
+     * @param testPaper
+     */
+    void saveTestPaper(TestPaper testPaper);
 }

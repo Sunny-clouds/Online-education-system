@@ -13,5 +13,4 @@ public class ActivityCommentVo {
     private String avatar;
     private String content;
     private String submitTime;
-
 }

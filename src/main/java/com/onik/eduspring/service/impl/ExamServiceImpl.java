@@ -2,7 +2,9 @@ package com.onik.eduspring.service.impl;
 
 import com.onik.eduspring.dto.ExamDto;
 import com.onik.eduspring.entity.Exam;
+import com.onik.eduspring.mapper.ActivityMapper;
 import com.onik.eduspring.mapper.ExamMapper;
+import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.ExamService;
 import com.onik.eduspring.vo.ExamVo;
 import org.springframework.beans.BeanUtils;
@@ -16,6 +18,8 @@ public class ExamServiceImpl implements ExamService {
 
     @Autowired
     private ExamMapper examMapper;
+    @Autowired
+    private ActivityMapper activityMapper;
 
     /**
      * 根据活动id获取考试信息
@@ -35,10 +39,11 @@ public class ExamServiceImpl implements ExamService {
     public void saveExam(ExamDto examDto) {
         Exam exam = new Exam();
         BeanUtils.copyProperties(examDto,exam);
-        if (exam.getMaxAttempts() > 1){
-            exam.setAllowRetake(exam.getMaxAttempts() - 1);
+        if (exam.getMaxAttempt() > 1){
+            exam.setAllowRetake(1);
+        }else {
+            exam.setAllowRetake(0);
         }
-        exam.setAllowRetake(0);
         exam.setCreateTime(LocalDateTime.now());
         examMapper.saveExam(exam);
     }
@@ -48,13 +53,21 @@ public class ExamServiceImpl implements ExamService {
      * @param examDto
      */
     @Override
-    public void updateExam(ExamDto examDto) {
-        Exam exam = new Exam();
-        BeanUtils.copyProperties(examDto,exam);
-        if (exam.getMaxAttempts() > 1){
-            exam.setAllowRetake(exam.getMaxAttempts() - 1);
+    public Result updateExam(ExamDto examDto) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startTime = activityMapper.getStartTime(examDto.getActivityId());
+        if (now.isBefore(startTime)) {
+            // 未开始
+            Exam exam = new Exam();
+            BeanUtils.copyProperties(examDto,exam);
+            if (exam.getMaxAttempt() > 1){
+                exam.setAllowRetake(1);
+            }else {
+                exam.setAllowRetake(0);
+            }
+            examMapper.updateExam(exam);
+            return Result.success();
         }
-        exam.setAllowRetake(0);
-        examMapper.updateExam(exam);
+        return Result.error("考试进行中，不能修改");
     }
 }
