@@ -12,10 +12,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ActivityVo {
     private Long id;
+    private Long bizId;
     private String title;
     private Double score;
     private LocalDateTime createTime;
     private Integer commentCount;
+    private Integer examSum;
     private Integer type;
     private Integer status;
     private LocalDateTime startTime;

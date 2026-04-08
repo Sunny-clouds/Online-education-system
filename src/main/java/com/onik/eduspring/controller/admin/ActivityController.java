@@ -34,16 +34,16 @@ public class ActivityController {
         return Result.success(activities);
     }
 
-    /**
-     * 发布活动信息
-     * @return
-     */
-    @PreAuthorize("hasAnyAuthority('admin','teacher')")
-    @PostMapping("/save")
-    public Result save(@RequestBody ActivityDto activityDto){
-        activityService.save(activityDto);
-        return Result.success();
-    }
+    ///**
+    // * 发布活动信息
+    // * @return
+    // */
+    //@PreAuthorize("hasAnyAuthority('admin','teacher')")
+    //@PostMapping("/save")
+    //public Result save(@RequestBody ActivityDto activityDto){
+    //    activityService.save(activityDto);
+    //    return Result.success();
+    //}
 
     /**
      * 删除活动信息

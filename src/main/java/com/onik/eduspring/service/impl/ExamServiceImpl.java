@@ -22,13 +22,13 @@ public class ExamServiceImpl implements ExamService {
     private ActivityMapper activityMapper;
 
     /**
-     * 根据活动id获取考试信息
-     * @param activityId
+     * 根据业务id获取考试信息
+     * @param bizId
      * @return
      */
     @Override
-    public ExamVo getExamByActivityId(Long activityId) {
-        return examMapper.getExamByActivityId(activityId);
+    public ExamVo getExamByBizId(Long bizId) {
+        return examMapper.getExamByBizId(bizId);
     }
 
     /**
@@ -36,16 +36,13 @@ public class ExamServiceImpl implements ExamService {
      * @param examDto
      */
     @Override
-    public void saveExam(ExamDto examDto) {
+    public Long saveExam(ExamDto examDto) {
         Exam exam = new Exam();
         BeanUtils.copyProperties(examDto,exam);
-        if (exam.getMaxAttempt() > 1){
-            exam.setAllowRetake(1);
-        }else {
-            exam.setAllowRetake(0);
-        }
+        exam.setAllowRetake(exam.getMaxAttempt() > 1 ? 1 : 0);
         exam.setCreateTime(LocalDateTime.now());
         examMapper.saveExam(exam);
+        return exam.getId();
     }
 
     /**
@@ -55,16 +52,12 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Result updateExam(ExamDto examDto) {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startTime = activityMapper.getStartTime(examDto.getActivityId());
+        LocalDateTime startTime = activityMapper.getStartTime(examDto.getId());
         if (now.isBefore(startTime)) {
             // 未开始
             Exam exam = new Exam();
-            BeanUtils.copyProperties(examDto,exam);
-            if (exam.getMaxAttempt() > 1){
-                exam.setAllowRetake(1);
-            }else {
-                exam.setAllowRetake(0);
-            }
+            BeanUtils.copyProperties(examDto, exam);
+            exam.setAllowRetake(exam.getMaxAttempt() > 1 ? 1 : 0);
             examMapper.updateExam(exam);
             return Result.success();
         }

@@ -39,12 +39,10 @@ public class ActivityServiceImpl implements ActivityService {
      * 发布活动
      * @param activityDto
      */
-    @Transactional
     @Override
     public void save(ActivityDto activityDto) {
         Activity activity = new Activity();
         BeanUtils.copyProperties(activityDto, activity);
-        activity.setStatus(1);
         activity.setCreateTime(LocalDateTime.now());
         activityMapper.save(activity);
     }

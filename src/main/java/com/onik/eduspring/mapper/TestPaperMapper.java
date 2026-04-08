@@ -22,4 +22,11 @@ public interface TestPaperMapper {
      * @param testPaper
      */
     void saveTestPaper(TestPaper testPaper);
+
+    /**
+     * 自动组成试卷
+     * @param id
+     * @param realTotal
+     */
+    void updateTotalScore(Long id, int realTotal);
 }

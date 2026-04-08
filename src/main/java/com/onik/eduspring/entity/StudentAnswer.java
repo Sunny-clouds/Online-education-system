@@ -4,19 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * 试卷-题目关联实体类
- */
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaperQuestion {
+public class StudentAnswer {
 
     private Long id;
-    private Long paperId;
+    private Long studentPaperId;
+    private Long studentId;
     private Long questionId;
-    private Double score;
-    private Integer sort;
-
+    private String studentAnswer;
+    private String correctAnswer;
+    private Integer score;
+    private Integer isCorrect;
 }

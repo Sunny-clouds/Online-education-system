@@ -8,16 +8,16 @@ public interface ExamService {
 
     /**
      * 根据活动id获取考试信息
-     * @param activityId
+     * @param bizId
      * @return
      */
-    ExamVo getExamByActivityId(Long activityId);
+    ExamVo getExamByBizId(Long bizId);
 
     /**
      * 新增考试信息
      * @param examDto
      */
-    void saveExam(ExamDto examDto);
+    Long saveExam(ExamDto examDto);
 
     /**
      * 修改考试信息

@@ -1,26 +1,23 @@
 package com.onik.eduspring.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-/**
- * 考试实体类
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Exam {
+public class StudentPaper {
 
     private Long id;
+    private Long studentId;
+    private Long activityId;
     private Long paperId;
-    private Integer duration;
+    private Integer attempt;
     private Integer totalScore;
-    private Integer allowRetake;
-    private Integer maxAttempt;
-    private Integer showResult;
-    private LocalDateTime createTime;
+    private LocalDateTime startTime;
+    private LocalDateTime submitTime;
+
 }

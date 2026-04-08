@@ -20,4 +20,5 @@ public class TestPaperVo {
     private String optionC;
     private String optionD;
     private Double paperScore;
+    private Integer sort;
 }

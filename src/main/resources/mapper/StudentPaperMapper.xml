@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onik.eduspring.mapper.StudentPaperMapper">
+
+    <!--保存学生考试信息-->
+    <insert id="save" parameterType="com.onik.eduspring.entity.StudentPaper">
+        insert into student_paper(student_id, activity_id, paper_id, attempt, total_score, start_time, submit_time)
+        values(#{studentId},#{activityId},#{paperId},#{attempt},#{totalScore},#{startTime},#{submitTime})
+    </insert>
+
+    <!--打回试卷-->
+    <delete id="delById" parameterType="java.lang.Long">
+        delete from student_paper where id=#{id}
+    </delete>
+
+    <!--根据用户id和试卷id查询用户做题次数-->
+    <select id="getAttemptByUseridAndPaperId" resultType="java.lang.Integer">
+        select attempt from student_paper where student_id=#{userId} and paper_id=#{id}
+    </select>
+
+    <!--根据学生id和试卷id查询学生成绩-->
+    <select id="getScoreByStudentIdAndPaperId" resultType="com.onik.eduspring.entity.StudentPaper">
+        select sp.id,sp.total_score  from student_paper sp
+        left join exam e on sp.paper_id = e.paper_id
+        where sp.student_id=#{studentId} and sp.paper_id=#{paperId}
+        and e.show_result = 1
+    </select>
+
+    <!--根据id查询学生id和试卷id-->
+    <select id="getStudentIdAndPaperId" resultType="com.onik.eduspring.entity.StudentPaper"
+            parameterType="java.lang.Long">
+        select * from student_paper where id=#{id}
+    </select>
+
+    <!--获取所有学生的考试信息-->
+    <select id="getAllStudentPaper" resultType="com.onik.eduspring.vo.StudentPaperVo" parameterType="java.lang.Long">
+        select sp.id,u.nickname,sp.attempt,sp.total_score from student_paper sp
+        left join user u on sp.student_id = u.id
+        where activity_id = #{activityId}
+    </select>
+
+</mapper>

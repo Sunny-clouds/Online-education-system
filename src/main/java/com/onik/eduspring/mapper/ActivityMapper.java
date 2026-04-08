@@ -21,9 +21,10 @@ public interface ActivityMapper {
      * @param id
      * @return
      */
-    @Select("select a.id, a.title, a.score, a.create_time,a.type,a.status,a.start_time,a.end_time,COUNT(ar.id) AS comment_count " +
+    @Select("select a.id,a.biz_id, a.title, a.score, a.create_time,a.type,a.status,a.start_time,a.end_time,COUNT(ar.id) AS comment_count ,count(sp.student_id) as exam_sum " +
             "from activity a " +
             "LEFT JOIN activity_discussion_record ar ON a.id = ar.activity_id " +
+            "left join student_paper sp on sp.activity_id = a.id " +
             "where a.course_id = #{id} and a.status != 0 " +
             "GROUP BY a.id")
     List<ActivityVo> getAllById(Long id);
@@ -32,7 +33,7 @@ public interface ActivityMapper {
      * 发布活动
      * @param activity
      */
-    @Insert("insert into activity(course_id,title, score,create_time,type,status,start_time,end_time) values(#{courseId},#{title}, #{score},#{createTime},#{type},#{status},#{startTime},#{endTime})")
+    @Insert("insert into activity(biz_id,course_id,title, score,create_time,type,status,start_time,end_time) values(#{bizId},#{courseId},#{title}, #{score},#{createTime},#{type},#{status},#{startTime},#{endTime})")
     void save(Activity activity);
 
     /**

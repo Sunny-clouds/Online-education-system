@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class ExamDto {
 
     private Long id;
-    private Long activityId;
     private Long paperId;
     private Integer duration;
     private Integer totalScore;

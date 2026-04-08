@@ -42,5 +42,18 @@
         left join course c on q.course_id = c.id
     </select>
 
+    <!--获取指定题型题目-->
+    <select id="selectByType" resultType="com.onik.eduspring.entity.Question">
+        select * from question where type = #{type} and course_id = #{courseId} ORDER BY RAND() LIMIT #{count}
+    </select>
+
+    <!--根据题目id获取正确答案-->
+    <select id="getExamTitleAnswerById" resultType="com.onik.eduspring.dto.StudentAnswerDto" parameterType="java.util.List">
+        select id as question_id,correct_answer,score from question
+        where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
 </mapper>

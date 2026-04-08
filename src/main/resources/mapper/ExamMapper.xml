@@ -3,17 +3,20 @@
 <mapper namespace="com.onik.eduspring.mapper.ExamMapper">
 
     <!--查询活动下的考试信息-->
-    <select id="getExamByActivityId" resultType="com.onik.eduspring.vo.ExamVo" parameterType="java.lang.Long">
+    <select id="getExamByBizId" resultType="com.onik.eduspring.vo.ExamVo" parameterType="java.lang.Long">
         SELECT e.id, e.paper_id,t.title, e.duration, e.total_score, e.allow_retake, e.max_attempt, e.show_result
         FROM exam e
         left join test_paper t on e.paper_id = t.id
-        WHERE activity_id = #{activityId}
+        WHERE e.id = #{bizId}
+    </select>
+    <select id="getMaxAttemptByPaperId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+        SELECT max_attempt FROM exam WHERE paper_id = #{id}
     </select>
 
     <!--保存考试信息-->
-    <insert id="saveExam" parameterType="com.onik.eduspring.entity.Exam">
-        INSERT INTO exam (activity_id, paper_id, duration, total_score, allow_retake, max_attempt, show_result, create_time)
-        VALUES (#{activityId}, #{paperId}, #{duration}, #{totalScore}, #{allowRetake}, #{maxAttempt}, #{showResult},#{createTime})
+    <insert id="saveExam" parameterType="com.onik.eduspring.entity.Exam" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO exam (paper_id, duration, total_score, allow_retake, max_attempt, show_result, create_time)
+        VALUES (#{paperId}, #{duration}, #{totalScore}, #{allowRetake}, #{maxAttempt}, #{showResult},#{createTime})
     </insert>
 
     <!--修改考试信息-->

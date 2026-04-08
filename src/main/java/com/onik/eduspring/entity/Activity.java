@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class Activity {
 
     private Long id;
+    private Long bizId;
     private Long courseId;
     private String title;
     private Integer type;

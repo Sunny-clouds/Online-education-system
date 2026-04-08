@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ActivityDto {
 
     private Long id;
+    private Long bizId;
     private Long courseId;
     private String title;
     private Double score;

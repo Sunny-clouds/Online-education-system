@@ -1,5 +1,6 @@
 package com.onik.eduspring.mapper;
 
+import com.onik.eduspring.dto.StudentAnswerDto;
 import com.onik.eduspring.entity.Question;
 import com.onik.eduspring.vo.QuestionVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,4 +33,18 @@ public interface QuestionMapper {
      * @param id
      */
     void delExamTitle(Long id);
+
+    /**
+     * 获取该题型全部题目
+     * @param type
+     * @return
+     */
+    List<Question> selectByType(int type, int count, Long courseId);
+
+    /**
+     * 根据题目id获取正确答案
+     * @param id
+     * @return
+     */
+    List<StudentAnswerDto> getExamTitleAnswerById(List<Long> id);
 }

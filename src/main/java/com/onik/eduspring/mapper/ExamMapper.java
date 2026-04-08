@@ -9,10 +9,10 @@ public interface ExamMapper {
 
     /**
      * 根据活动id获取考试信息
-     * @param activityId
+     * @param bizId
      * @return
      */
-    ExamVo getExamByActivityId(Long activityId);
+    ExamVo getExamByBizId(Long bizId);
 
     /**
      * 新增考试信息
@@ -25,4 +25,11 @@ public interface ExamMapper {
      * @param exam
      */
     void updateExam(Exam exam);
+
+    /**
+     * 根据试卷id获取最大尝试次数
+     * @param id
+     * @return
+     */
+    Integer getMaxAttemptByPaperId(Long id);
 }
