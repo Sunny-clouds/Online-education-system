@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
     public void save(UserDto userDto) {
         User user = userMapper.getUserByUserName(userDto.getUsername());
         if (user != null) {
-            return;
+            throw new RuntimeException("用户已存在");
         }
         log.info("用户注册成功:{}", userDto);
         user = new User();

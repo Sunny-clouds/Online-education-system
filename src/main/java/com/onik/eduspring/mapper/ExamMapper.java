@@ -3,12 +3,13 @@ package com.onik.eduspring.mapper;
 import com.onik.eduspring.entity.Exam;
 import com.onik.eduspring.vo.ExamVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface ExamMapper {
 
     /**
-     * 根据活动id获取考试信息
+     * 根据业务id获取考试信息
      * @param bizId
      * @return
      */
@@ -32,4 +33,12 @@ public interface ExamMapper {
      * @return
      */
     Integer getMaxAttemptByPaperId(Long id);
+
+    /**
+     * 获取考试信息的id
+     * @param id
+     * @return
+     */
+    @Select("select id from exam where paper_id = #{id}")
+    Long getExamId(Long id);
 }

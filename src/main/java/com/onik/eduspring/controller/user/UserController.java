@@ -5,6 +5,7 @@ import com.onik.eduspring.dto.UserLoginDto;
 import com.onik.eduspring.dto.UserPasswordDto;
 import com.onik.eduspring.entity.User;
 import com.onik.eduspring.result.Result;
+import com.onik.eduspring.service.CourseService;
 import com.onik.eduspring.service.UserService;
 import com.onik.eduspring.vo.UserLoginVo;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CourseService courseService;
 
     /**
      * 用户注册

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onik.eduspring.mapper.UserProgressMapper">
+
+    <!--保存用户课程进度-->
+    <insert id="save" parameterType="com.onik.eduspring.entity.UserProgress">
+        insert into user_video_progress(student_id, video_id, progress, last_watch_time)
+        values(#{studentId}, #{videoId}, #{progress}, #{lastWatchTime})
+    </insert>
+
+    <!--修改用户课程进度-->
+    <update id="update" parameterType="com.onik.eduspring.entity.UserProgress">
+        update user_video_progress
+        <set>
+            <if test="studentId != null">student_id = #{studentId},</if>
+            <if test="videoId != null">video_id = #{videoId},</if>
+            <if test="progress != null">progress = #{progress},</if>
+            <if test="lastWatchTime != null">last_watch_time = #{lastWatchTime}</if>
+        </set>
+        WHERE student_id = #{studentId} AND video_id = #{videoId}
+    </update>
+
+    <!--根据视频id查询用户观看进度-->
+    <select id="getProgressByVideoId" resultType="java.lang.Double">
+        SELECT progress FROM user_video_progress WHERE student_id = #{studentId} AND video_id = #{videoId}
+    </select>
+
+    <!--获取大于90的视频id-->
+    <select id="getVideoId" resultType="java.lang.Long">
+        SELECT video_id FROM user_video_progress WHERE progress > 90 and student_id = #{userId}
+    </select>
+</mapper>

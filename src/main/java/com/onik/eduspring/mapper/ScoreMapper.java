@@ -13,7 +13,7 @@ public interface ScoreMapper {
      * 查询所有成绩信息
      * @return
      */
-    List<ScoreVo> getAll();
+    List<ScoreVo> getAll(Long userId);
 
     /**
      * 根据用户名查询成绩信息

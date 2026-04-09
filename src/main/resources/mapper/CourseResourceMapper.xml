@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onik.eduspring.mapper.CourseResourceMapper">
 
-
     <!--上传课程资源-->
     <insert id="save">
         insert into course_resource(course_id, name, url, type, size, duration, upload_user, create_time)
@@ -20,5 +19,26 @@
         from course_resource c
         left join user u on c.upload_user = u.id
         where course_id = #{id}
+    </select>
+
+    <!--根据课程id获取课程时长-->
+    <select id="getDurationByVideoId" resultType="java.lang.Long" parameterType="java.lang.Long">
+        select duration
+        from course_resource
+        where id = #{videoId}
+    </select>
+
+    <!--根据课程id获取课程时长-->
+    <select id="getDurationByCourseId" resultType="java.lang.Long" parameterType="java.lang.Long">
+        select sum(duration) from course_resource where course_id = #{courseId} and type = 'video'
+    </select>
+
+    <!--根据视频id获取课程时长-->
+    <select id="getDurationByListVideoId" resultType="java.lang.Long"
+            parameterType="java.util.List">
+        select sum(duration) from course_resource where id in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 </mapper>

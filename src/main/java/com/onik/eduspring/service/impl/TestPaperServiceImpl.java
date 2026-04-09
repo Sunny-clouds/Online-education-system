@@ -28,6 +28,8 @@ public class TestPaperServiceImpl implements TestPaperService {
     private ExamMapper examMapper;
     @Autowired
     private StudentPaperMapper studentPaperMapper;
+    @Autowired
+    private ActivityMapper activityMapper;
 
     /**
      * 获取试卷信息
@@ -37,12 +39,19 @@ public class TestPaperServiceImpl implements TestPaperService {
      */
     @Override
     public List<TestPaperVo> getTestPaperById(Long id, Long userId) {
-        Integer max = examMapper.getMaxAttemptByPaperId(id);
-        Integer attempt = studentPaperMapper.getAttemptByUseridAndPaperId(id,userId);
-        if(attempt == null || attempt < max){
-            return testPaperMapper.getTestPaperById(id);
+        LocalDateTime now = LocalDateTime.now();
+        Long examId = examMapper.getExamId(id);
+        LocalDateTime endTime = activityMapper.getEndTime(examId);
+        if (now.isAfter(endTime)) {
+            throw new RuntimeException("考试已结束");
+        }else{
+            Integer max = examMapper.getMaxAttemptByPaperId(id);
+            Integer attempt = studentPaperMapper.getAttemptByUseridAndPaperId(id,userId);
+            if(attempt == null || attempt < max){
+                return testPaperMapper.getTestPaperById(id);
+            }
+            throw new RuntimeException("您已超过最大尝试次数");
         }
-        throw new RuntimeException("您已超过最大尝试次数");
     }
 
     /**

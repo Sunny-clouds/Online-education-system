@@ -2,7 +2,6 @@ package com.onik.eduspring.controller.user;
 
 
 import com.onik.eduspring.dto.StudentCourseDto;
-import com.onik.eduspring.dto.StudentCourseStatusDto;
 import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.StudentCourseService;
@@ -66,17 +65,6 @@ public class StudentCourseController {
     @PostMapping("/save")
     public Result save(@RequestBody StudentCourseDto studentCourseDto){
         return studentCourseService.save(studentCourseDto);
-    }
-
-    /**
-     * 修改选课进度
-     * @param statusDto
-     * @return
-     */
-    @PutMapping("/update")
-    public Result update(@RequestBody StudentCourseStatusDto statusDto){
-        studentCourseService.update(statusDto);
-        return Result.success();
     }
 
     /**

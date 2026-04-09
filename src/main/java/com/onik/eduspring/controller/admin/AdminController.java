@@ -20,7 +20,6 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-
     /**
      * 分页查询所有用户
      * @return
@@ -84,11 +83,5 @@ public class AdminController {
         System.out.println("设置用户状态成功:" + id + " ——" + status);
         return Result.success();
     }
-
-
-
-
-
-
 
 }

@@ -79,7 +79,7 @@ public interface ActivityMapper {
      * @param id
      * @return
      */
-    @Select("select end_time from activity where id = #{id}")
+    @Select("select end_time from activity where biz_id = #{id}")
     LocalDateTime getEndTime(Long id);
 
     /**

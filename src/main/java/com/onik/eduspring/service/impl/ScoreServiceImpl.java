@@ -7,6 +7,7 @@ import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.entity.Score;
 import com.onik.eduspring.mapper.ScoreMapper;
 import com.onik.eduspring.service.ScoreService;
+import com.onik.eduspring.util.BaseContext;
 import com.onik.eduspring.util.ScoreUtil;
 import com.onik.eduspring.vo.ScoreVo;
 import org.springframework.beans.BeanUtils;
@@ -28,8 +29,9 @@ public class ScoreServiceImpl implements ScoreService {
      */
     @Override
     public PageResult<ScoreVo> getAll(Integer pageNum, Integer pageSize) {
+        Long userId = BaseContext.getUserId();
         PageHelper.startPage(pageNum, pageSize);
-        List<ScoreVo> scores = scoreMapper.getAll();
+        List<ScoreVo> scores = scoreMapper.getAll(userId);
         PageInfo<ScoreVo> p = new PageInfo<>(scores);
         return new PageResult<ScoreVo>(p.getTotal(),p.getList());
     }

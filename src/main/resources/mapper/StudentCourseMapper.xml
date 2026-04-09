@@ -9,10 +9,10 @@
     </insert>
 
     <!--修改课程进度-->
-    <update id="update">
+    <update id="updateProgress">
         UPDATE student_course
-        SET status = #{status},progress = #{progress}
-        WHERE id = #{id}
+        SET progress = #{progress},status = #{status}
+        WHERE student_id = #{studentId} AND course_id = #{courseId}
     </update>
 
     <!--根据选课id删除选课信息-->

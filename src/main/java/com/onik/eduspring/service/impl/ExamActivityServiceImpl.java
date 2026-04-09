@@ -28,6 +28,7 @@ public class ExamActivityServiceImpl implements ExamActivityService {
         // 2、自动组卷
         testPaperService.AutoGenerateTestPaper(dto.getTestPaperDto());
         // 3、创建考试
+        dto.getExamDto().setPaperId(paperId);
         Long examId = examService.saveExam(dto.getExamDto());
         dto.getActivityDto().setBizId(examId);
         // 4、发布活动

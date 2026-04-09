@@ -2,6 +2,7 @@ package com.onik.eduspring.mapper;
 
 
 import com.onik.eduspring.dto.StudentCourseDto;
+import com.onik.eduspring.dto.UserProgressDto;
 import com.onik.eduspring.entity.StudentCourse;
 import com.onik.eduspring.vo.StudentCourseVo;
 import com.onik.eduspring.vo.StudentsCourseVo;
@@ -39,9 +40,9 @@ public interface StudentCourseMapper {
 
     /**
      * 修改课程进度
-     * @param studentCourse
+     * @param dto
      */
-    void update(StudentCourse studentCourse);
+    void updateProgress(UserProgressDto dto);
 
     /**
      * 根据学生id删除选课信息

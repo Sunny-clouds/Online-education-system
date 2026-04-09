@@ -3,7 +3,6 @@ package com.onik.eduspring.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.onik.eduspring.dto.StudentCourseDto;
-import com.onik.eduspring.dto.StudentCourseStatusDto;
 import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.entity.StudentCourse;
 import com.onik.eduspring.mapper.StudentCourseMapper;
@@ -79,26 +78,6 @@ public class StudentCourseServiceImpl implements StudentCourseService {
             return Result.success();
         }
         return Result.error("已经选过了，不能再选了");
-    }
-
-    /**
-     * 修改选课进度
-     * @param statusDto
-     */
-    @Override
-    @Transactional
-    public void update(StudentCourseStatusDto statusDto) {
-        StudentCourse studentCourse = new StudentCourse();
-        BeanUtils.copyProperties(statusDto, studentCourse);
-        if(statusDto.getProgress() == 100L){
-            studentCourse.setStatus(2L);
-            studentCourse.setProgress(100L);
-        }else{
-            studentCourse.setStatus(1L);
-            studentCourse.setProgress(statusDto.getProgress());
-        }
-        studentCourse.setSelectTime(LocalDateTime.now());
-        studentCourseMapper.update(studentCourse);
     }
 
     /**

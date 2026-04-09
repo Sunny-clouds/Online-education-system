@@ -44,6 +44,7 @@ public class ActivityServiceImpl implements ActivityService {
         Activity activity = new Activity();
         BeanUtils.copyProperties(activityDto, activity);
         activity.setCreateTime(LocalDateTime.now());
+        activity.setStatus(1);
         activityMapper.save(activity);
     }
 

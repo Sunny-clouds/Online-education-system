@@ -72,7 +72,6 @@ public class ExamController {
      * @param paperId
      * @return
      */
-    @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @GetMapping("/getScoreByStudentIdAndPaperId/{studentId}/{paperId}")
     public Result getScoreByStudentIdAndPaperId(@PathVariable Long studentId,@PathVariable Long paperId){
         StudentPaper score = studentPaperService.getScoreByStudentIdAndPaperId(studentId, paperId);
@@ -96,6 +95,7 @@ public class ExamController {
      * @param activityId
      * @return
      */
+    @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @GetMapping("/getAllStudentPaper/{activityId}")
     public Result getAllStudentPaper(@PathVariable Long activityId){
         List<StudentPaperVo> studentPapers = studentPaperService.getAllStudentPaper(activityId);
