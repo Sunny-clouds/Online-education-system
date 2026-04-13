@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -14,12 +15,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableMethodSecurity   // 开启方法级权限控制，例如 @PreAuthorize
 public class SecurityConfig {
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 // 关闭csrf（前后端分离项目通常关闭）
                 .csrf(csrf -> csrf.disable())
+                // 关闭默认登录
+                .formLogin(form -> form.disable())
+                .httpBasic(basic -> basic.disable())
+                // 无状态
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
                 // 配置接口权限
                 .authorizeHttpRequests(auth -> auth
                         // 登录注册接口放行
