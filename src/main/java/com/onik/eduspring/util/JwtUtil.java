@@ -19,8 +19,8 @@ public class JwtUtil {
 
     private static final Key KEY = Keys.hmacShaKeyFor(SIGN_KEY.getBytes(StandardCharsets.UTF_8));
 
-    // 过期时间（12小时）
-    private static final long EXPIRE_TIME = 12 * 60 * 60 * 1000;
+    // 过期时间（8小时）
+    private static final long EXPIRE_TIME = 8 * 60 * 60 * 1000;
     /**
      * 生成JWT令牌
      * @param claims 存储的数据

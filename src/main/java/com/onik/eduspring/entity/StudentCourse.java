@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-
+/**
+ * 学生课程关联实体类
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentCourse {
-
-
     private Long id;
     private Long studentId;
     private Long courseId;
@@ -20,5 +20,4 @@ public class StudentCourse {
     private LocalDateTime selectTime;
     private Long status;
     private Long progress;
-
 }

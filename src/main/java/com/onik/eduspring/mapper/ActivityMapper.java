@@ -47,7 +47,7 @@ public interface ActivityMapper {
      * 回复活动
      * @param activityDiscussionRecord
      */
-    @Insert("insert into activity_discussion_record(activity_id, student_id, submit_time,score,content) values(#{activityId}, #{studentId}, #{submitTime},#{score},#{content})")
+    @Insert("insert into activity_discussion_record(activity_id, student_id, submit_time,content) values(#{activityId}, #{studentId}, #{submitTime},#{content})")
     void saveComment(ActivityDiscussionRecord activityDiscussionRecord);
 
     /**
@@ -64,7 +64,7 @@ public interface ActivityMapper {
      * @return
      */
     @Select("select score from activity where id = #{activityId}")
-    Double getScore(Long activityId);
+    Long getScore(Long activityId);
 
     /**
      * 根据学生id查询学生是否参与过该活动
@@ -79,7 +79,7 @@ public interface ActivityMapper {
      * @param id
      * @return
      */
-    @Select("select end_time from activity where biz_id = #{id}")
+    @Select("select end_time from activity where id = #{id}")
     LocalDateTime getEndTime(Long id);
 
     /**
@@ -96,4 +96,12 @@ public interface ActivityMapper {
      */
     @Select("select start_time from activity where id = #{activityId}")
     LocalDateTime getStartTime(Long activityId);
+
+    /**
+     * 根据活动id获取课程id
+     * @param activityId
+     * @return
+     */
+    @Select("select course_id from activity where id = #{activityId}")
+    Long getCourseIdById(Long activityId);
 }

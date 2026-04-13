@@ -8,6 +8,20 @@
         values(#{studentId},#{activityId},#{paperId},#{attempt},#{totalScore},#{startTime},#{submitTime})
     </insert>
 
+    <!--更新学生考试信息-->
+    <update id="update" parameterType="com.onik.eduspring.entity.StudentPaper">
+        update student_paper
+            <set>
+                <if test="attempt != null">attempt = #{attempt},</if>
+                <if test="totalScore != null">total_score = #{totalScore},</if>
+                <if test="startTime != null">start_time = #{startTime},</if>
+                <if test="submitTime != null">submit_time = #{submitTime}</if>
+            </set>
+        where student_id = #{studentId}
+        and activity_id = #{activityId}
+        and paper_id = #{paperId}
+    </update>
+
     <!--打回试卷-->
     <delete id="delById" parameterType="java.lang.Long">
         delete from student_paper where id=#{id}
@@ -22,13 +36,11 @@
     <select id="getScoreByStudentIdAndPaperId" resultType="com.onik.eduspring.entity.StudentPaper">
         select sp.id,sp.total_score  from student_paper sp
         left join exam e on sp.paper_id = e.paper_id
-        where sp.student_id=#{studentId} and sp.paper_id=#{paperId}
-        and e.show_result = 1
+        where sp.student_id=#{studentId} and sp.paper_id=#{paperId} and e.show_result = 1
     </select>
 
     <!--根据id查询学生id和试卷id-->
-    <select id="getStudentIdAndPaperId" resultType="com.onik.eduspring.entity.StudentPaper"
-            parameterType="java.lang.Long">
+    <select id="getStudentIdAndPaperId" resultType="com.onik.eduspring.entity.StudentPaper" parameterType="java.lang.Long">
         select * from student_paper where id=#{id}
     </select>
 

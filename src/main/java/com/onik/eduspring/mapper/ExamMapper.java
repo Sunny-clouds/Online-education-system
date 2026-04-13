@@ -39,6 +39,6 @@ public interface ExamMapper {
      * @param id
      * @return
      */
-    @Select("select id from exam where paper_id = #{id}")
+    @Select("select id from activity where biz_id = (select id from exam where paper_id = #{id})")
     Long getExamId(Long id);
 }

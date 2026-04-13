@@ -58,10 +58,9 @@
         SELECT sc.id ,u.username AS username,u.nickname AS nickname,u.avatar,sc.progress,SUM(a.score) AS total_score
         FROM student_course sc
         LEFT JOIN user u ON sc.student_id = u.id
-        LEFT JOIN course c ON sc.course_id = c.id
-        LEFT JOIN user t ON c.teacher_id = t.id
-        LEFT JOIN activity_discussion_record a on a.student_id = sc.student_id
+        LEFT JOIN student_activity_record a ON sc.course_id = a.course_id and a.student_id = sc.student_id
         WHERE sc.course_id = #{id}
-        GROUP BY sc.id
+        GROUP BY sc.id, u.username, u.nickname, u.avatar, sc.progress
+        ORDER BY total_score DESC, sc.id ASC
     </select>
 </mapper>

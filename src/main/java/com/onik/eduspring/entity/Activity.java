@@ -21,7 +21,7 @@ public class Activity {
     private String title;
     private Integer type;
     private Integer status;
-    private Double score;
+    private Long score;
     private LocalDateTime createTime;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

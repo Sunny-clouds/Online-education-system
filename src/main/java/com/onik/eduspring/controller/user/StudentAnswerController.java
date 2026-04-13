@@ -22,13 +22,14 @@ public class StudentAnswerController {
     private StudentAnswerService studentAnswerService;
 
     /**
-     * 保存学生答案信息
-     * @return
+     *
+     * @param studentAnswerDtos
+     * @return 返回考试分数
      */
     @PostMapping("/saveStudentAnswer")
     public Result saveStudentAnswer(@RequestBody PublishStudentExamDto studentAnswerDtos){
-        studentAnswerService.saveStudentAnswer(studentAnswerDtos);
+        int score = studentAnswerService.saveStudentAnswer(studentAnswerDtos);
         log.info("保存学生答案信息成功:{}", studentAnswerDtos);
-        return Result.success();
+        return Result.success(score);
     }
 }

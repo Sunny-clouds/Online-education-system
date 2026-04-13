@@ -29,6 +29,7 @@ public class ScoreServiceImpl implements ScoreService {
      */
     @Override
     public PageResult<ScoreVo> getAll(Integer pageNum, Integer pageSize) {
+        // TODO 后期从考试类型活动里获取成绩
         Long userId = BaseContext.getUserId();
         PageHelper.startPage(pageNum, pageSize);
         List<ScoreVo> scores = scoreMapper.getAll(userId);

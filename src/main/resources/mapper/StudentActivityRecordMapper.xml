@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onik.eduspring.mapper.StudentActivityRecordMapper">
+
+    <!--保存学生活动记录-->
+    <insert id="save">
+        insert into student_activity_record(student_id, activity_id,course_id,score,submit_time)
+        values(#{studentId},#{activityId},#{courseId},#{score},#{submitTime})
+    </insert>
+
+    <!--根据学生id、活动id和课程ID删除学生活动记录-->
+    <delete id="delByStudentId" parameterType="com.onik.eduspring.entity.StudentActivityRecord">
+        delete from student_activity_record where student_id=#{studentId} and activity_id=#{activityId} and course_id=#{courseId}
+    </delete>
+
+    <!--退课后删除学生活动记录-->
+    <delete id="delByStudentIdandCourseId">
+        delete from student_activity_record where student_id=#{studentId} and course_id=#{courseId}
+    </delete>
+</mapper>

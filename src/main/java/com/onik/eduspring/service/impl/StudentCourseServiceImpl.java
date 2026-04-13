@@ -5,9 +5,11 @@ import com.github.pagehelper.PageInfo;
 import com.onik.eduspring.dto.StudentCourseDto;
 import com.onik.eduspring.entity.PageResult;
 import com.onik.eduspring.entity.StudentCourse;
+import com.onik.eduspring.mapper.StudentActivityRecordMapper;
 import com.onik.eduspring.mapper.StudentCourseMapper;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.StudentCourseService;
+import com.onik.eduspring.util.BaseContext;
 import com.onik.eduspring.vo.StudentCourseVo;
 import com.onik.eduspring.vo.StudentsCourseVo;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +27,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
     @Autowired
     private StudentCourseMapper studentCourseMapper;
-
+    @Autowired
+    private StudentActivityRecordMapper studentActivityRecordMapper;
 
     /**
      * 获取所有学生选课信息
@@ -51,13 +54,16 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     }
 
     /**
-     * 根据选课id删除选课信息
+     * 根据选课id删除选课信息，并删除学生活动记录
      * @param id
      */
     @Transactional
     @Override
     public void delByUserName(Long id) {
+        Long userId = BaseContext.getUserId();
+        Long courseId = studentCourseMapper.getCourseIdById(id);
         studentCourseMapper.delByUserName(id);
+        studentActivityRecordMapper.delByStudentIdandCourseId(userId,courseId);
     }
 
     /**

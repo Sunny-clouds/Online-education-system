@@ -4,7 +4,9 @@ import com.onik.eduspring.dto.ActivityCommentDto;
 import com.onik.eduspring.dto.ActivityDto;
 import com.onik.eduspring.entity.Activity;
 import com.onik.eduspring.entity.ActivityDiscussionRecord;
+import com.onik.eduspring.entity.StudentActivityRecord;
 import com.onik.eduspring.mapper.ActivityMapper;
+import com.onik.eduspring.mapper.StudentActivityRecordMapper;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.ActivityService;
 import com.onik.eduspring.vo.ActivityCommentVo;
@@ -24,11 +26,13 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Autowired
     private ActivityMapper activityMapper;
+    @Autowired
+    private StudentActivityRecordMapper studentActivityRecordMapper;
 
     /**
      * 根据课程id查询所有活动信息
      * @param id
-     * @return
+     * @return 返回活动信息
      */
     @Override
     public List<ActivityVo> getAllById(Long id) {
@@ -76,10 +80,13 @@ public class ActivityServiceImpl implements ActivityService {
         if (user ==  null){
             ActivityDiscussionRecord activityDiscussionRecord = new ActivityDiscussionRecord();
             BeanUtils.copyProperties(activityCommentDto, activityDiscussionRecord);
-            Double score = activityMapper.getScore(activityCommentDto.getActivityId());
-            activityDiscussionRecord.setScore(score);
             activityDiscussionRecord.setSubmitTime(LocalDateTime.now());
             activityMapper.saveComment(activityDiscussionRecord);
+            StudentActivityRecord studentActivityRecord = new StudentActivityRecord();
+            BeanUtils.copyProperties(activityDiscussionRecord, studentActivityRecord);
+            studentActivityRecord.setScore(activityMapper.getScore(activityDiscussionRecord.getActivityId()));
+            studentActivityRecord.setCourseId(activityMapper.getCourseIdById(studentActivityRecord.getActivityId()));
+            studentActivityRecordMapper.save(studentActivityRecord);
             return Result.success();
         }
         return Result.error("已经参加过活动了，不能重复参加哦");
@@ -88,7 +95,7 @@ public class ActivityServiceImpl implements ActivityService {
     /**
      * 根据活动id查看活动的评论
      * @param id
-     * @return
+     * @return 返回活动的评论
      */
     @Override
     public List<ActivityCommentVo> getCommentById(Long id) {

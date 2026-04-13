@@ -6,7 +6,6 @@
         update score
         <set>
             <if test="usualScore != null">usual_score = #{usualScore},</if>
-            <if test="examScore != null">exam_score = #{examScore},</if>
             <if test="totalScore != null">total_score = #{totalScore},</if>
             <if test="gradeLevel != null">grade_level = #{gradeLevel},</if>
             <if test="remark != null">remark = #{remark}</if>
@@ -35,7 +34,7 @@
         order by s.total_score desc
     </select>
 
-    <!--根据课程查询成绩-->
+    <!--根据课程模糊查询成绩-->
     <select id="getScoreByTitle" resultType="com.onik.eduspring.vo.ScoreVo">
         SELECT stu.nickname AS userName,c.title,s.exam_name,s.usual_score,s.exam_score,s.total_score,s.grade_level,tea.nickname AS teacherName,s.remark
         FROM score s

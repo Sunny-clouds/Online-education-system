@@ -50,4 +50,10 @@ public interface StudentPaperMapper {
      * @return
      */
     List<StudentPaperVo> getAllStudentPaper(Long activityId);
+
+    /**
+     * 修改学生考试信息
+     * @param studentPaper
+     */
+    void update(StudentPaper studentPaper);
 }

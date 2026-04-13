@@ -15,7 +15,7 @@ public class ActivityDto {
     private Long bizId;
     private Long courseId;
     private String title;
-    private Double score;
+    private Long score;
     private Integer type;
     private Integer status;
     private LocalDateTime startTime;

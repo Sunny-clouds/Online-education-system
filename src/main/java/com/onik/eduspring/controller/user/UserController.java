@@ -24,8 +24,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private CourseService courseService;
 
     /**
      * 用户注册

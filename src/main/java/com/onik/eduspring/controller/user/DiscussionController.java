@@ -30,7 +30,7 @@ public class DiscussionController {
      * @return
      */
     @GetMapping("/getAll")
-    public Result getAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+    public Result getAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         PageResult<DiscussionVo> discussions = discussionService.getAll(pageNum, pageSize);
         log.info("获取帖子成功:{}", discussions.getTotal());
         return Result.success(discussions);
@@ -67,7 +67,7 @@ public class DiscussionController {
      * @return
      */
     @GetMapping("/getByTitle")
-    public Result getByTitle(@RequestParam String title,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+    public Result getByTitle(@RequestParam String title,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         PageResult<DiscussionVo> discussionVo = discussionService.getByTitle(title ,pageNum, pageSize);
         log.info("根据标题查询帖子成功:{}", discussionVo.getTotal());
         return Result.success(discussionVo);
@@ -79,7 +79,7 @@ public class DiscussionController {
      * @return
      */
     @GetMapping("/getByCourseName")
-    public Result getByCourseName(@RequestParam String courseName,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+    public Result getByCourseName(@RequestParam String courseName,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         PageResult<DiscussionVo> discussionVo = discussionService.getByCourseName(courseName ,pageNum, pageSize);
         log.info("根据课程查询帖子成功:{}", discussionVo.getTotal());
         return Result.success(discussionVo);

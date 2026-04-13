@@ -12,7 +12,7 @@
         JOIN paper_question pq ON tp.id = pq.paper_id
         JOIN question q ON pq.question_id = q.id
         WHERE tp.id = #{id}
-        ORDER BY pq.sort ASC;
+        ORDER BY pq.sort ASC, q.id ASC
     </select>
 
     <!--新增试卷-->

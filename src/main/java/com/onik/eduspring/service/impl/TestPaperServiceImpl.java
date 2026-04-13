@@ -33,15 +33,14 @@ public class TestPaperServiceImpl implements TestPaperService {
 
     /**
      * 获取试卷信息
-     *
      * @param id
      * @return
      */
     @Override
     public List<TestPaperVo> getTestPaperById(Long id, Long userId) {
         LocalDateTime now = LocalDateTime.now();
-        Long examId = examMapper.getExamId(id);
-        LocalDateTime endTime = activityMapper.getEndTime(examId);
+        Long activityId = examMapper.getExamId(id);
+        LocalDateTime endTime = activityMapper.getEndTime(activityId);
         if (now.isAfter(endTime)) {
             throw new RuntimeException("考试已结束");
         }else{
@@ -96,6 +95,13 @@ public class TestPaperServiceImpl implements TestPaperService {
         paperQuestionMapper.insert(paperQuestions);
     }
 
+    /**
+     * 查询指定类型的题目
+     * @param type 类型
+     * @param count 数量
+     * @param courseId 课程id
+     * @return
+     */
     public List<Question> selectQuestionsByCount(int type, int count, Long courseId) {
         List<Question> questionBank = questionMapper.selectByType(type,count,courseId);
         if (questionBank.size() < count) {

@@ -31,7 +31,7 @@ public class StudentCourseController {
      */
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @GetMapping("/getAll")
-    public Result  getAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+    public Result  getAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         PageResult<StudentCourseVo> list = studentCourseService.getAll(pageNum, pageSize);
         log.info("获取所有学生选课信息:{}",list.getTotal());
         return Result.success(list);
@@ -76,7 +76,7 @@ public class StudentCourseController {
      * @return
      */
     @GetMapping("/getCourseById")
-    public Result getCourseById(@RequestParam Long id,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize){
+    public Result getCourseById(@RequestParam Long id,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize){
         PageResult<StudentsCourseVo> list = studentCourseService.getCourseById(id,pageNum, pageSize);
         log.info("根据选课课程id查询所有学生:{}",list.getTotal());
         return Result.success(list);

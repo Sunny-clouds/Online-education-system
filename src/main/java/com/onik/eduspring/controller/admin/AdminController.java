@@ -26,7 +26,7 @@ public class AdminController {
      */
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/selUser")
-    public Result getAllUsers(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+    public Result getAllUsers(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         PageResult<UserVo> users =adminService.getAllUsers(pageNum, pageSize);
         log.info("获取所有用户成功:{}", users.getTotal());
         return Result.success(users);

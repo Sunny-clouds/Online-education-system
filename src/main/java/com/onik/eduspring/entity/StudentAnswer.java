@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 学生答案实体类
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

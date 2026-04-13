@@ -7,6 +7,7 @@ import com.onik.eduspring.entity.StudentCourse;
 import com.onik.eduspring.vo.StudentCourseVo;
 import com.onik.eduspring.vo.StudentsCourseVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -63,4 +64,12 @@ public interface StudentCourseMapper {
      * @return
      */
     List<StudentsCourseVo> getCourseById(Long id);
+
+    /**
+     * 根据选课id获取课程id
+     * @param id
+     * @return
+     */
+    @Select("select course_id from student_course where id = #{id}")
+    Long getCourseIdById(Long id);
 }

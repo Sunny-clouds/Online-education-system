@@ -21,6 +21,11 @@ public interface StudentPaperService {
      */
     void delById(Long id);
 
+    /**
+     * 查询所有学生的考试信息
+     * @param activityId
+     * @return
+     */
     List<StudentPaperVo> getAllStudentPaper(Long activityId);
 
 }

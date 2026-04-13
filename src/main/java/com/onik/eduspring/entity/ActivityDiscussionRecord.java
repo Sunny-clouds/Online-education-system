@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * 活动讨论记录
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +18,5 @@ public class ActivityDiscussionRecord {
     private Long activityId;
     private Long studentId;
     private LocalDateTime submitTime;
-    private Double score;
     private String content;
 }
