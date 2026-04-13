@@ -8,6 +8,7 @@ import com.onik.eduspring.service.StudentPaperService;
 import com.onik.eduspring.vo.StudentPaperVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class StudentPaperServiceImpl implements StudentPaperService {
      * 打回学生的考试信息
      * @param id
      */
+    @Transactional
     @Override
     public void delById(Long id) {
         StudentPaper studentPaper = studentPaperMapper.getStudentIdAndPaperId(id);

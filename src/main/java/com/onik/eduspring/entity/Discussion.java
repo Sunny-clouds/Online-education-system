@@ -21,6 +21,5 @@ public class Discussion {
     private String content;
     private Long likeCount;
     private Long isTop;
-    private Long status;
     private LocalDateTime createTime;
 }

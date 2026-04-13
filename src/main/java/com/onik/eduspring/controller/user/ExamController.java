@@ -40,6 +40,7 @@ public class ExamController {
     @GetMapping("/getExamByBizId/{bizId}")
     public Result getExamByBizId(@PathVariable Long bizId){
         ExamVo examVo = examService.getExamByBizId(bizId);
+        log.info("获取考试信息成功:{}", examVo);
         return Result.success(examVo);
     }
 
@@ -52,6 +53,7 @@ public class ExamController {
     @PostMapping("/saveExam")
     public Result saveExam(@RequestBody PublishExamDto examDto ){
         examActivityService.publishExamActivity(examDto);
+        log.info("新增考试信息成功:{}", examDto);
         return Result.success();
     }
 
@@ -63,6 +65,7 @@ public class ExamController {
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @PostMapping("/updateExam")
     public Result updateExam(@RequestBody ExamDto examDto){
+        log.info("修改考试信息成功:{}", examDto);
         return examService.updateExam(examDto);
     }
 
@@ -75,6 +78,7 @@ public class ExamController {
     @GetMapping("/getScoreByStudentIdAndPaperId/{studentId}/{paperId}")
     public Result getScoreByStudentIdAndPaperId(@PathVariable Long studentId,@PathVariable Long paperId){
         StudentPaper score = studentPaperService.getScoreByStudentIdAndPaperId(studentId, paperId);
+        log.info("查询考试成绩成功:{}", score);
         return Result.success(score);
     }
 
@@ -87,6 +91,7 @@ public class ExamController {
     @DeleteMapping("/delById/{id}")
     public Result delById(@PathVariable Long id){
         studentPaperService.delById(id);
+        log.info("打回学生考试信息成功:{}", id);
         return Result.success();
     }
 
@@ -99,6 +104,7 @@ public class ExamController {
     @GetMapping("/getAllStudentPaper/{activityId}")
     public Result getAllStudentPaper(@PathVariable Long activityId){
         List<StudentPaperVo> studentPapers = studentPaperService.getAllStudentPaper(activityId);
+        log.info("查询所有学生的考试信息成功:{}", studentPapers.size());
         return Result.success(studentPapers);
     }
 }

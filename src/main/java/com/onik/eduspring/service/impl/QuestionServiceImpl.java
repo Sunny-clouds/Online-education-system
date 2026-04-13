@@ -26,7 +26,6 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public void saveExamTitle(ExamTitleDto examTitleDto) {
-        log.info("新增题目:{}",examTitleDto);
         Question question = new Question();
         BeanUtils.copyProperties(examTitleDto,question);
         question.setCreateTime(LocalDateTime.now());

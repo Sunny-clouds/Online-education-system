@@ -5,8 +5,8 @@
 
     <!--添加帖子信息-->
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into discussion_post(user_id, course_id, title, content, like_count,is_top, status, create_time)
-        values (#{userId},#{courseId}, #{title},#{content},#{likeCount},#{isTop},#{status},#{createTime})
+        insert into discussion_post(user_id, course_id, title, content, like_count,is_top, create_time)
+        values (#{userId},#{courseId}, #{title},#{content},#{likeCount},#{isTop},#{createTime})
     </insert>
 
     <!--添加帖子下的评论-->
@@ -52,7 +52,6 @@
         FROM discussion_comment c
         LEFT JOIN user u ON c.user_id = u.id
         WHERE c.post_id = #{id}
-        AND c.status = 1
         ORDER BY c.create_time ASC
     </select>
 

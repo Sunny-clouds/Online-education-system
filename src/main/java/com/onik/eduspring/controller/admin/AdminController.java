@@ -27,8 +27,8 @@ public class AdminController {
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/selUser")
     public Result getAllUsers(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
-        log.info("分页查询：{},{}", pageNum, pageSize);
         PageResult<UserVo> users =adminService.getAllUsers(pageNum, pageSize);
+        log.info("获取所有用户成功:{}", users.getTotal());
         return Result.success(users);
     }
 
@@ -40,7 +40,7 @@ public class AdminController {
     @DeleteMapping("/delById/{id}")
     public Result delUserById(@PathVariable Long id) {
         adminService.delById(id);
-        System.out.println("删除用户成功:" + id);
+        log.info("删除用户成功:{}", id);
         return Result.success();
     }
 
@@ -53,7 +53,7 @@ public class AdminController {
     @GetMapping("/getByNickName")
     public Result getByNickName(@RequestParam String nickname) {
         UserVo user = adminService.getByNickName(nickname);
-        System.out.println("查询用户成功:" + user);
+        log.info("查询用户成功:{}", user);
         return Result.success(user);
     }
 
@@ -66,7 +66,7 @@ public class AdminController {
     @PutMapping("/setRole/{id}/{role}")
     public Result setRole(@PathVariable Long id,@PathVariable Integer role) {
         adminService.setRole(id, role);
-        System.out.println("设置用户身份成功:" + id + " ——" + role);
+        log.info("设置用户身份成功:{} — {}", id, role);
         return Result.success();
     }
 
@@ -80,7 +80,7 @@ public class AdminController {
     @PutMapping("/setStatus/{id}/{status}")
     public Result setStatus(@PathVariable Long id,@PathVariable Integer status) {
         adminService.setStatus(id, status);
-        System.out.println("设置用户状态成功:" + id + " ——" + status);
+        log.info("设置用户状态成功:{} — {}", id, status);
         return Result.success();
     }
 

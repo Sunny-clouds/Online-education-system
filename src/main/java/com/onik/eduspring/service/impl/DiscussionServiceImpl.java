@@ -49,7 +49,6 @@ public class DiscussionServiceImpl implements DiscussionService {
         BeanUtils.copyProperties(discussionDto, discussion);
         discussion.setLikeCount(0L);
         discussion.setIsTop(0L);
-        discussion.setStatus(1L);
         discussion.setCreateTime(LocalDateTime.now());
         discussionMapper.save(discussion);
     }

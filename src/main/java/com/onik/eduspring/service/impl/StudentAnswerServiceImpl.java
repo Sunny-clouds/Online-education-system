@@ -71,17 +71,14 @@ public class StudentAnswerServiceImpl implements StudentAnswerService {
             studentAnswerMapper.save(studentAnswers);
             StudentAnswerDto answerDto = studentAnswerMapper.getByStudentIdAndPaperId(first);
             studentAnswerDtos.getStudentPaper().setTotalScore(answerDto.getCountScore());
-            studentAnswerDtos.getStudentPaper().setAttempt(attempt++);
+            studentAnswerDtos.getStudentPaper().setAttempt(attempt);
         }
+        studentAnswerDtos.getStudentPaper().setAttempt(++attempt);
         studentPaperMapper.save(studentAnswerDtos.getStudentPaper());
-
-        //studentAnswerMapper.delByStudentIdAndPaperId(first);
-
-
     }
 
     /**
-     * 根据学生id和试卷id删除学生答案信息
+     * 根据学生id和试卷id删除学生答案和答卷信息
      * @param studentAnswerDto
      */
     @Override

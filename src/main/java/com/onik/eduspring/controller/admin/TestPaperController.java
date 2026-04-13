@@ -35,6 +35,7 @@ public class TestPaperController {
     public Result getTestPaperById(@PathVariable Long id){
         Long userId = BaseContext.getUserId();
         List<TestPaperVo> testPaperVo = testPaperService.getTestPaperById(id,userId);
+        log.info("获取试卷信息成功:{}", testPaperVo.size());
         return Result.success(testPaperVo);
     }
 

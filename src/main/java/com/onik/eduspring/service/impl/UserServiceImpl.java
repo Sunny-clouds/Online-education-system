@@ -12,6 +12,7 @@ import com.onik.eduspring.vo.UserLoginVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     /**
      * 根据用户名、密码查询用户
@@ -34,17 +37,30 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserLoginVo login(UserLoginDto dto) {
-        UserLoginVo user = userMapper.getByUserName(dto);
-        if (user != null){
-            //生成JWT令牌
-            Map<String, Object> claims = new HashMap<>();
-            claims.put("id", user.getId());
-            claims.put("role_code", user.getRoleCode());
-            String token = JwtUtil.generateToken(claims);
-            return new UserLoginVo(user.getId(), user.getUsername(),user.getNickname(),user.getEmail(),user.getPhone(),user.getRoleCode(),user.getAvatar(),token);
+        User user = userMapper.getUserByUserName(dto.getUsername());
+        if (user == null || !passwordEncoder.matches(dto.getPassword(), user.getPassword())){
+            throw new RuntimeException("用户名或密码错误");
         }
-        return null;
-
+        String role;
+        switch (user.getRole()) {
+            case 1:
+                role = "admin";
+                break;
+            case 2:
+                role = "teacher";
+                break;
+            case 3:
+                role = "student";
+                break;
+            default:
+                role = "unknown";
+        }
+        //生成JWT令牌
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", user.getId());
+        claims.put("role_code", role);
+        String token = JwtUtil.generateToken(claims);
+        return new UserLoginVo(user.getId(), user.getUsername(),user.getNickname(),user.getEmail(),user.getPhone(),role,user.getAvatar(),token);
     }
 
     /**
@@ -57,7 +73,6 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         user.setUpdateTime(LocalDateTime.now());
-        log.info("修改用户信息成功:{}", userDto);
         userMapper.update(user);
     }
 
@@ -72,9 +87,11 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             throw new RuntimeException("用户已存在");
         }
-        log.info("用户注册成功:{}", userDto);
         user = new User();
         BeanUtils.copyProperties(userDto, user);
+        // 密码加密
+        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+        user.setPassword(encodedPassword);
         user.setCreateTime(LocalDateTime.now());
         user.setRole(3);
         userMapper.save(user);
@@ -98,9 +115,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Result setPassword(UserPasswordDto userPasswordDto) {
         String oldPassword = userMapper.getUserById(userPasswordDto.getId());
-        if (!oldPassword.equals(userPasswordDto.getOldPassword())){
+        if (!passwordEncoder.matches(userPasswordDto.getOldPassword(), oldPassword)) {
             return Result.error("旧密码错误");
         }
+        String newPassword = passwordEncoder.encode(userPasswordDto.getPassword());
+        userPasswordDto.setPassword(newPassword);
         userMapper.updateById(userPasswordDto);
         return Result.success();
     }

@@ -33,6 +33,7 @@ public class QuestionController {
     @PostMapping("/saveExamTitle")
     public Result saveExamTitle(@RequestBody ExamTitleDto examTitleDto){
         questionService.saveExamTitle(examTitleDto);
+        log.info("新增题目成功:{}", examTitleDto);
         return Result.success();
     }
 
@@ -44,6 +45,7 @@ public class QuestionController {
     @PostMapping("/updateExamTitle")
     public Result updateExamTitle(@RequestBody ExamTitleDto examTitleDto){
         questionService.updateExamTitle(examTitleDto);
+        log.info("修改题目成功:{}", examTitleDto);
         return Result.success();
     }
 
@@ -54,6 +56,7 @@ public class QuestionController {
     @GetMapping("/getAllExamTitle")
     public Result getAllExamTitle(){
         List<QuestionVo> examTitles = questionService.getAllExamTitle();
+        log.info("获取题库所有题目信息:{}", examTitles.size());
         return Result.success(examTitles);
     }
 
@@ -66,6 +69,7 @@ public class QuestionController {
     @GetMapping("/delExamTitle/{id}")
     public Result delExamTitle(@PathVariable Long id){
         questionService.delExamTitle(id);
+        log.info("删除题库题目成功:{}", id);
         return Result.success();
     }
 }

@@ -21,7 +21,6 @@ import java.util.List;
 @RequestMapping("/api/score")
 public class ScoreController {
 
-
     @Autowired
     private ScoreService scoreService;
 
@@ -32,7 +31,9 @@ public class ScoreController {
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @GetMapping("/getAll")
     public Result getAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+        // TODO 后续改为在考试类型的活动中查询成绩
         PageResult<ScoreVo> scores = scoreService.getAll(pageNum, pageSize);
+        log.info("查询所有学生科目的成绩信息成功:{}", scores.getTotal());
         return Result.success(scores);
     }
 
@@ -43,7 +44,9 @@ public class ScoreController {
      */
     @GetMapping("/getScoreByUserName")
     public Result getScoreByUserName(@RequestParam String username) {
+        // TODO 后续改为在考试类型的活动中查询成绩
         List<ScoreVo> scores = scoreService.getScoreByUserName(username);
+        log.info("根据学生姓名查询成绩成功:{}", scores.size());
         return Result.success(scores);
     }
 
@@ -55,7 +58,9 @@ public class ScoreController {
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @GetMapping("/getScoreByTitle")
     public Result getScoreByTitle(@RequestParam String title,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+        // TODO 后续改为在考试类型的活动中查询成绩
         PageResult<ScoreVo> scores = scoreService.getScoreByTitle(title, pageNum, pageSize);
+        log.info("根据课程名查询成绩成功:{}", scores.getTotal());
         return Result.success(scores);
     }
 
@@ -67,7 +72,9 @@ public class ScoreController {
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @PostMapping("/setScore")
     public Result setScore(ScoreDto scoredto){
+        // TODO 后续改为在考试类型的活动中查询成绩
         scoreService.setScore(scoredto);
+        log.info("修改成绩成功:{}", scoredto);
         return Result.success();
     }
 }

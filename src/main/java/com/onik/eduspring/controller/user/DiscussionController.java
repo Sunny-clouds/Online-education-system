@@ -32,6 +32,7 @@ public class DiscussionController {
     @GetMapping("/getAll")
     public Result getAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
         PageResult<DiscussionVo> discussions = discussionService.getAll(pageNum, pageSize);
+        log.info("获取帖子成功:{}", discussions.getTotal());
         return Result.success(discussions);
     }
 
@@ -44,6 +45,7 @@ public class DiscussionController {
     @DeleteMapping("/del/{id}")
     public Result delById(@PathVariable Long id){
         discussionService.delById(id);
+        log.info("删除帖子成功:{}", id);
         return Result.success();
     }
 
@@ -55,6 +57,7 @@ public class DiscussionController {
     @PostMapping("/save")
     public Result save(@RequestBody DiscussionDto discussionDto){
         discussionService.save(discussionDto);
+        log.info("添加帖子成功:{}", discussionDto);
         return Result.success();
     }
 
@@ -66,6 +69,7 @@ public class DiscussionController {
     @GetMapping("/getByTitle")
     public Result getByTitle(@RequestParam String title,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
         PageResult<DiscussionVo> discussionVo = discussionService.getByTitle(title ,pageNum, pageSize);
+        log.info("根据标题查询帖子成功:{}", discussionVo.getTotal());
         return Result.success(discussionVo);
     }
 
@@ -77,6 +81,7 @@ public class DiscussionController {
     @GetMapping("/getByCourseName")
     public Result getByCourseName(@RequestParam String courseName,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
         PageResult<DiscussionVo> discussionVo = discussionService.getByCourseName(courseName ,pageNum, pageSize);
+        log.info("根据课程查询帖子成功:{}", discussionVo.getTotal());
         return Result.success(discussionVo);
     }
 
@@ -88,6 +93,7 @@ public class DiscussionController {
     @GetMapping("/comments/{id}")
     public Result getComments(@PathVariable Long id) {
         List<DiscussionCommentVo> list = discussionService.getByPostId(id);
+        log.info("查询帖子下的评论成功:{}", list.size());
         return Result.success(list);
     }
 
@@ -98,6 +104,7 @@ public class DiscussionController {
     @PostMapping("/saveComment")
     public Result saveComment(@RequestBody DiscussionCommentDto discussionCommentDto){
         discussionService.saveComment(discussionCommentDto);
+        log.info("回复帖子成功:{}", discussionCommentDto);
         return Result.success();
     }
 
@@ -108,6 +115,7 @@ public class DiscussionController {
     @GetMapping("/postLike/{id}")
     public Result postLike(@PathVariable Long id){
         discussionService.updatePostLike(id);
+        log.info("更新帖子点赞数成功:{}", id);
         return Result.success();
     }
 
@@ -118,6 +126,7 @@ public class DiscussionController {
     @GetMapping("/commentLike/{id}")
     public Result commentLike(@PathVariable Long id){
         discussionService.updateCommentLike(id);
+        log.info("更新评论点赞数成功:{}", id);
         return Result.success();
     }
 
@@ -129,6 +138,7 @@ public class DiscussionController {
     @DeleteMapping("/delComment/{id}")
     public Result delComment(@PathVariable Long id){
         discussionService.delComment(id);
+        log.info("删除评论成功:{}", id);
         return Result.success();
     }
 }

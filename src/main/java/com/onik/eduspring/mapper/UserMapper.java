@@ -1,6 +1,5 @@
 package com.onik.eduspring.mapper;
 
-import com.onik.eduspring.dto.UserLoginDto;
 import com.onik.eduspring.dto.UserPasswordDto;
 import com.onik.eduspring.entity.User;
 import com.onik.eduspring.vo.UserLoginVo;
@@ -13,13 +12,13 @@ import java.util.List;
 public interface UserMapper {
     /**
      * 根据用户名查询用户
-     * @param userLoginDto
+     * @param username
      * @return
      */
-    @Select("select u.id, u.username, u.nickname ,u.email,u.phone,r.role_code,u.avatar from user u " +
+    @Select("select u.id, u.username,u.password, u.nickname ,u.email,u.phone,r.role_code,u.avatar from user u " +
             "left join role r on u.role = r.id " +
-            "where u.username = #{username} and u.password = #{password}")
-    UserLoginVo getByUserName(UserLoginDto userLoginDto);
+            "where u.username = #{username} and u.status != 0")
+    UserLoginVo getByUserName(String username);
 
     /**
      * 新增用户
@@ -39,7 +38,7 @@ public interface UserMapper {
      * @param username
      * @return
      */
-    @Select("select * from user where username = #{username}")
+    @Select("select * from user where username = #{username} and status != 0")
     User getUserByUserName(String username);
 
     /**

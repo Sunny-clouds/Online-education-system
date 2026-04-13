@@ -30,9 +30,10 @@ public class CourseResourceController {
     public Result getCourseResourceById(@PathVariable Long id) {
         List<CourseResourceVo> courseResourceVo = courseResourceService.getCourseResourceById(id);
         if (courseResourceVo != null){
-            log.info("获取课程资源成功");
+            log.info("获取课程资源成功:{}", courseResourceVo.size());
             return Result.success(courseResourceVo);
         }
+        log.info("获取课程资源失败:{}", id);
         return Result.success();
     }
 
@@ -45,6 +46,7 @@ public class CourseResourceController {
     @DeleteMapping("/del/{id}")
     public Result delCourseResourceById(@PathVariable Long id) {
         courseResourceService.delCourseResourceById(id);
+        log.info("删除课程资源成功:{}", id);
         return Result.success();
     }
 
@@ -56,6 +58,7 @@ public class CourseResourceController {
     @PostMapping("/save")
     public Result save(@RequestBody CourseResourceDto courseResourceDto){
         courseResourceService.save(courseResourceDto);
+        log.info("上传课程资源成功:{}", courseResourceDto);
         return Result.success();
     }
 }

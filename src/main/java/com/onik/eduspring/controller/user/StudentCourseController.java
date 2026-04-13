@@ -33,6 +33,7 @@ public class StudentCourseController {
     @GetMapping("/getAll")
     public Result  getAll(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
         PageResult<StudentCourseVo> list = studentCourseService.getAll(pageNum, pageSize);
+        log.info("获取所有学生选课信息:{}",list.getTotal());
         return Result.success(list);
     }
 
@@ -44,6 +45,7 @@ public class StudentCourseController {
     @GetMapping("/getByUserName")
     public Result getByUserName(@RequestParam String nickname) {
     	List<StudentCourseVo> list = studentCourseService.getByUserName(nickname);
+        log.info("根据学生姓名查询选课信息:{}",list.size());
     	return Result.success(list);
     }
 
@@ -55,6 +57,7 @@ public class StudentCourseController {
     @DeleteMapping("/delByUserName/{id}")
     public Result delByUserName(@PathVariable Long id) {
     	studentCourseService.delByUserName(id);
+        log.info("根据选课id删除选课信息:{}",id);
     	return Result.success();
     }
 
@@ -64,6 +67,7 @@ public class StudentCourseController {
      */
     @PostMapping("/save")
     public Result save(@RequestBody StudentCourseDto studentCourseDto){
+        log.info("添加选课信息:{}",studentCourseDto);
         return studentCourseService.save(studentCourseDto);
     }
 
@@ -73,8 +77,8 @@ public class StudentCourseController {
      */
     @GetMapping("/getCourseById")
     public Result getCourseById(@RequestParam Long id,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize){
-        log.info("根据选课课程id查询所有学生:{}",id);
         PageResult<StudentsCourseVo> list = studentCourseService.getCourseById(id,pageNum, pageSize);
+        log.info("根据选课课程id查询所有学生:{}",list.getTotal());
         return Result.success(list);
     }
 }

@@ -24,7 +24,6 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-
     /**
      * 获取所有课程
      * @return
@@ -43,6 +42,7 @@ public class CourseController {
     @GetMapping("/getByTitle")
     public Result getCourseByTitle(@RequestParam String title,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         PageResult<CourseVo> courseVo = courseService.getCourseByTitle(title, pageNum, pageSize);
+        log.info("获取课程信息:{}", courseVo.getTotal());
         return Result.success(courseVo);
     }
 
@@ -55,7 +55,7 @@ public class CourseController {
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     public Result saveCourse(@RequestBody CourseDto courseDto) {
         courseService.save(courseDto);
-        System.out.println("添加课程成功:" + courseDto);
+        log.info("添加课程成功:{}", courseDto);
         return Result.success();
     }
 
@@ -68,7 +68,7 @@ public class CourseController {
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     public Result updateCourse(@RequestBody Course course) {
         courseService.update(course);
-        System.out.println("修改课程成功:" + course);
+        log.info("修改课程信息成功:{}", course);
         return Result.success();
     }
 
@@ -82,7 +82,7 @@ public class CourseController {
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     public Result delCourse(@PathVariable Long id) {
         courseService.delById(id);
-        System.out.println("删除课程成功:" + id);
+        log.info("删除课程成功:{}", id);
         return Result.success();
     }
 
@@ -93,6 +93,7 @@ public class CourseController {
     @GetMapping("/getByTeaId/{id}")
     public Result getCourseByTeaId(@PathVariable Long id){
         List<CourseVo> courseVo = courseService.getCourseByTeaId(id);
+        log.info("根据教师id查询课程信息:{}", courseVo.size());
         return Result.success(courseVo);
     }
 

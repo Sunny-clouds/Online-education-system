@@ -31,6 +31,7 @@ public class ActivityController {
     @GetMapping("/getAllById/{id}")
     public Result getAllById(@PathVariable Long id){
         List<ActivityVo> activities = activityService.getAllById(id);
+        log.info("获取课程下的所有活动:{}", activities.size());
         return Result.success(activities);
     }
 
@@ -42,6 +43,7 @@ public class ActivityController {
     @PostMapping("/save")
     public Result save(@RequestBody ActivityDto activityDto){
         activityService.save(activityDto);
+        log.info("发布活动信息:{}", activityDto);
         return Result.success();
     }
 
@@ -52,6 +54,7 @@ public class ActivityController {
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @DeleteMapping("/delById/{id}")
     public Result delById(@PathVariable Long id){
+        log.info("删除活动信息:{}", id);
         return activityService.delById(id);
     }
 
@@ -61,6 +64,7 @@ public class ActivityController {
      */
     @PostMapping("/saveComment")
     public Result saveComment(@RequestBody ActivityCommentDto activityCommentDto){
+        log.info("回复活动评论:{}", activityCommentDto);
         return activityService.saveComment(activityCommentDto);
     }
 
@@ -72,6 +76,7 @@ public class ActivityController {
     @GetMapping("/getCommentById/{id}")
     public Result getCommentById(@PathVariable Long id){
         List<ActivityCommentVo> activity = activityService.getCommentById(id);
+        log.info("根据活动id查看活动的评论:{}", activity.size());
         return Result.success(activity);
     }
 
@@ -83,6 +88,7 @@ public class ActivityController {
     @PutMapping("/setStartAndEndTime")
     public Result setStartAndEndTime(@RequestBody ActivityDto activityDto){
         activityService.setStartAndEndTime(activityDto);
+        log.info("修改活动开始和结束时间:{}", activityDto);
         return Result.success();
     }
 }

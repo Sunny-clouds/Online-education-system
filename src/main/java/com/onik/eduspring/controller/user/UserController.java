@@ -34,6 +34,7 @@ public class UserController {
     @PostMapping("/register")
     public Result register(@RequestBody UserDto userDto) {
         userService.save(userDto);
+        log.info("用户注册成功:{}", userDto);
         return Result.success();
     }
 
@@ -50,6 +51,7 @@ public class UserController {
             log.info("用户登录成功:{}", user);
             return Result.success(user);
         }
+        log.error("用户登录失败:{}", userLoginDto);
         return Result.error("用户名或密码错误");
     }
 
@@ -60,6 +62,7 @@ public class UserController {
     @PutMapping("/update")
     public Result updateUser(@RequestBody UserDto userDto) {
         userService.update(userDto);
+        log.info("修改用户信息成功:{}", userDto);
         return Result.success();
     }
 
@@ -70,6 +73,7 @@ public class UserController {
     @GetMapping("/teacherList")
     public Result getTeacherList() {
         List<User> list = userService.getAllTeacher();
+        log.info("获取所有老师成功:{}", list.size());
         return Result.success(list);
     }
 
@@ -79,6 +83,7 @@ public class UserController {
      */
     @PostMapping("/setPassword")
     private Result setPassword(@RequestBody UserPasswordDto userPasswordDto){
+        log.info("修改密码:{}", userPasswordDto);
         return userService.setPassword(userPasswordDto);
     }
 

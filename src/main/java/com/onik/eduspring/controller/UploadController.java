@@ -51,6 +51,7 @@ public class UploadController {
             // 4. 流式上传
             InputStream inputStream = file.getInputStream();
             String url = ossOperator.upload(inputStream, file.getOriginalFilename(),type);
+            log.info("文件上传成功：{}", url);
             return Result.success(url);
         } catch (Exception e) {
             log.error("文件上传失败", e);

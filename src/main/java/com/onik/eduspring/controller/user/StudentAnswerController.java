@@ -28,6 +28,7 @@ public class StudentAnswerController {
     @PostMapping("/saveStudentAnswer")
     public Result saveStudentAnswer(@RequestBody PublishStudentExamDto studentAnswerDtos){
         studentAnswerService.saveStudentAnswer(studentAnswerDtos);
+        log.info("保存学生答案信息成功:{}", studentAnswerDtos);
         return Result.success();
     }
 }

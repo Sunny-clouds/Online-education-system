@@ -15,13 +15,10 @@ public class FileStrategyFactory {
      * 获取对应策略
      */
     public FileStrategy getStrategy(String type) {
-
         FileTypeEnum fileTypeEnum = FileTypeEnum.getByType(type);
-
         if (fileTypeEnum == null) {
             throw new RuntimeException("未知文件类型");
         }
-
         return (FileStrategy) applicationContext.getBean(fileTypeEnum.getBeanName());
     }
 }
