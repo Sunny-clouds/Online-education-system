@@ -24,4 +24,11 @@ public interface StudentActivityRecordMapper {
      * @param courseId
      */
     void delByStudentIdandCourseId(Long userId, Long courseId);
+
+    /**
+     * 查询学生活动记录
+     * @param studentActivityRecord
+     * @return
+     */
+    StudentActivityRecord getByStuIdAndCourseIdAndActivityId(StudentActivityRecord studentActivityRecord);
 }

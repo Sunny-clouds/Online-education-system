@@ -3,6 +3,7 @@ package com.onik.eduspring.mapper;
 import com.onik.eduspring.entity.Score;
 import com.onik.eduspring.vo.ScoreVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -34,4 +35,31 @@ public interface ScoreMapper {
      * @param score
      */
     void setScore(Score score);
+
+    /**
+     * 添加成绩信息
+     * @param score
+     */
+    void save(Score score);
+
+    /**
+     * 更新成绩信息
+     * @param score
+     */
+    void updateScore(Score score);
+
+    /**
+     * 根据id查询考试分数
+     * @param id
+     * @return
+     */
+    @Select("select exam_score from score where id = #{id}")
+    Double getExamScoreById(Long id);
+
+    /**
+     * 根据用户名查询成绩信息（老师）
+     * @param username
+     * @return
+     */
+    List<ScoreVo> getScoreByNameTeacher(String username);
 }

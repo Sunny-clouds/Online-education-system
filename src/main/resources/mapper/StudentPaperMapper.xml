@@ -34,7 +34,7 @@
 
     <!--根据学生id和试卷id查询学生成绩-->
     <select id="getScoreByStudentIdAndPaperId" resultType="com.onik.eduspring.entity.StudentPaper">
-        select sp.id,sp.total_score  from student_paper sp
+        select sp.id,sp.attempt,sp.total_score  from student_paper sp
         left join exam e on sp.paper_id = e.paper_id
         where sp.student_id=#{studentId} and sp.paper_id=#{paperId} and e.show_result = 1
     </select>

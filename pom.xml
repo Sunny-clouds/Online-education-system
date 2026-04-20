@@ -107,6 +107,12 @@
             <artifactId>httpcore5</artifactId>
             <version>5.3.4</version>
         </dependency>
+        <!--Knife4j接口文档-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <version>4.5.0</version>
+        </dependency>
     </dependencies>
 
     <build>

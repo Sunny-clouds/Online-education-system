@@ -9,6 +9,8 @@ import com.onik.eduspring.service.ExamService;
 import com.onik.eduspring.service.StudentPaperService;
 import com.onik.eduspring.vo.ExamVo;
 import com.onik.eduspring.vo.StudentPaperVo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/exam")
 @Slf4j
+@Tag(name = "考试管理")
 public class ExamController {
 
     @Autowired
@@ -38,6 +41,7 @@ public class ExamController {
      * @return
      */
     @GetMapping("/getExamByBizId/{bizId}")
+    @Operation(summary = "获取考试信息")
     public Result getExamByBizId(@PathVariable Long bizId){
         ExamVo examVo = examService.getExamByBizId(bizId);
         log.info("获取考试信息成功:{}", examVo);
@@ -51,6 +55,7 @@ public class ExamController {
      */
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @PostMapping("/saveExam")
+    @Operation(summary = "新增考试信息")
     public Result saveExam(@RequestBody PublishExamDto examDto ){
         examActivityService.publishExamActivity(examDto);
         log.info("新增考试信息成功:{}", examDto);
@@ -64,6 +69,7 @@ public class ExamController {
      */
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @PostMapping("/updateExam")
+    @Operation(summary = "修改考试信息")
     public Result updateExam(@RequestBody ExamDto examDto){
         log.info("修改考试信息成功:{}", examDto);
         return examService.updateExam(examDto);
@@ -76,6 +82,7 @@ public class ExamController {
      * @return
      */
     @GetMapping("/getScoreByStudentIdAndPaperId/{studentId}/{paperId}")
+    @Operation(summary = "查询考试成绩")
     public Result getScoreByStudentIdAndPaperId(@PathVariable Long studentId,@PathVariable Long paperId){
         StudentPaper score = studentPaperService.getScoreByStudentIdAndPaperId(studentId, paperId);
         log.info("查询考试成绩成功:{}", score);
@@ -89,6 +96,7 @@ public class ExamController {
      */
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @DeleteMapping("/delById/{id}")
+    @Operation(summary = "打回学生考试信息")
     public Result delById(@PathVariable Long id){
         studentPaperService.delById(id);
         log.info("打回学生考试信息成功:{}", id);
@@ -102,6 +110,7 @@ public class ExamController {
      */
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @GetMapping("/getAllStudentPaper/{activityId}")
+    @Operation(summary = "查询所有学生的考试信息")
     public Result getAllStudentPaper(@PathVariable Long activityId){
         List<StudentPaperVo> studentPapers = studentPaperService.getAllStudentPaper(activityId);
         log.info("查询所有学生的考试信息成功:{}", studentPapers.size());

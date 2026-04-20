@@ -6,6 +6,8 @@ import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.ActivityService;
 import com.onik.eduspring.vo.ActivityCommentVo;
 import com.onik.eduspring.vo.ActivityVo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/activity")
 @Slf4j
+@Tag(name = "活动管理模块")
 public class ActivityController {
 
     @Autowired
@@ -29,6 +32,7 @@ public class ActivityController {
      * @return
      */
     @GetMapping("/getAllById/{id}")
+    @Operation(summary = "获取课程下的所有活动信息")
     public Result getAllById(@PathVariable Long id){
         List<ActivityVo> activities = activityService.getAllById(id);
         log.info("获取课程下的所有活动:{}", activities.size());
@@ -41,6 +45,7 @@ public class ActivityController {
      */
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @PostMapping("/save")
+    @Operation(summary = "发布活动信息")
     public Result save(@RequestBody ActivityDto activityDto){
         activityService.save(activityDto);
         log.info("发布活动信息:{}", activityDto);
@@ -53,6 +58,7 @@ public class ActivityController {
      */
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @DeleteMapping("/delById/{id}")
+    @Operation(summary = "删除活动信息")
     public Result delById(@PathVariable Long id){
         log.info("删除活动信息:{}", id);
         return activityService.delById(id);
@@ -62,6 +68,7 @@ public class ActivityController {
      * 回复活动评论
      * @return
      */
+    @Operation(summary = "回复活动评论")
     @PostMapping("/saveComment")
     public Result saveComment(@RequestBody ActivityCommentDto activityCommentDto){
         log.info("回复活动评论:{}", activityCommentDto);
@@ -73,6 +80,7 @@ public class ActivityController {
      * @param id
      * @return
      */
+    @Operation(summary = "根据活动id查看活动的评论")
     @GetMapping("/getCommentById/{id}")
     public Result getCommentById(@PathVariable Long id){
         List<ActivityCommentVo> activity = activityService.getCommentById(id);
@@ -84,6 +92,7 @@ public class ActivityController {
      * 修改活动开始和结束时间
      * @return
      */
+    @Operation(summary = "修改活动开始和结束时间")
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @PutMapping("/setStartAndEndTime")
     public Result setStartAndEndTime(@RequestBody ActivityDto activityDto){

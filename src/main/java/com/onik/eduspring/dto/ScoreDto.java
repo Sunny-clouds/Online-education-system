@@ -11,6 +11,5 @@ public class ScoreDto {
 
     private Long id;
     private Double usualScore;
-    private Double examScore;
     private String remark;
 }

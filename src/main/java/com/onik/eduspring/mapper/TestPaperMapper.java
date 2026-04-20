@@ -4,6 +4,7 @@ package com.onik.eduspring.mapper;
 import com.onik.eduspring.entity.TestPaper;
 import com.onik.eduspring.vo.TestPaperVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -29,4 +30,12 @@ public interface TestPaperMapper {
      * @param realTotal
      */
     void updateTotalScore(Long id, int realTotal);
+
+    /**
+     * 根据试卷id查询试卷标题
+     * @param paperId
+     * @return
+     */
+    @Select("select title,create_user from test_paper where id = #{paperId}")
+    TestPaper getTitleAndTeaById(Long paperId);
 }

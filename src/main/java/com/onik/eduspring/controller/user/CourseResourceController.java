@@ -4,6 +4,8 @@ import com.onik.eduspring.dto.CourseResourceDto;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.CourseResourceService;
 import com.onik.eduspring.vo.CourseResourceVo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +19,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/api/courseResource")
+@Tag(name = "课程资源管理")
 public class CourseResourceController {
 
     @Autowired
@@ -27,6 +30,7 @@ public class CourseResourceController {
      * @return
      */
     @GetMapping("/getCourseResourceById/{id}")
+    @Operation(summary = "根据课程id获取课程资源")
     public Result getCourseResourceById(@PathVariable Long id) {
         List<CourseResourceVo> courseResourceVo = courseResourceService.getCourseResourceById(id);
         if (courseResourceVo != null){
@@ -44,6 +48,7 @@ public class CourseResourceController {
      */
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @DeleteMapping("/del/{id}")
+    @Operation(summary = "根据id删除课程资源")
     public Result delCourseResourceById(@PathVariable Long id) {
         courseResourceService.delCourseResourceById(id);
         log.info("删除课程资源成功:{}", id);
@@ -56,6 +61,7 @@ public class CourseResourceController {
      */
     @PreAuthorize("hasAnyAuthority('admin','teacher')")
     @PostMapping("/save")
+    @Operation(summary = "上传课程资源")
     public Result save(@RequestBody CourseResourceDto courseResourceDto){
         courseResourceService.save(courseResourceDto);
         log.info("上传课程资源成功:{}", courseResourceDto);

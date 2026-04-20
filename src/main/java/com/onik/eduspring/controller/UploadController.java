@@ -4,6 +4,8 @@ import com.onik.eduspring.factory.FileStrategyFactory;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.strategy.FileStrategy;
 import com.onik.eduspring.util.AliyunOSSOperator;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,7 @@ import java.io.InputStream;
 @RestController
 @Slf4j
 @RequestMapping("/api/upload")
+@Tag(name = "文件上传接口")
 public class UploadController {
 
     @Autowired
@@ -34,6 +37,7 @@ public class UploadController {
      * @return 文件访问URL
      */
     @PostMapping("/upload")
+    @Operation(summary = "文件上传接口")
     public Result upload(@RequestParam("file") MultipartFile file, @RequestParam("type") String type) {
         try {
             // 1. 判空

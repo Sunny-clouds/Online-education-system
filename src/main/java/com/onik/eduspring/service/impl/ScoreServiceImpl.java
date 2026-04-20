@@ -29,7 +29,6 @@ public class ScoreServiceImpl implements ScoreService {
      */
     @Override
     public PageResult<ScoreVo> getAll(Integer pageNum, Integer pageSize) {
-        // TODO 后期从考试类型活动里获取成绩
         Long userId = BaseContext.getUserId();
         PageHelper.startPage(pageNum, pageSize);
         List<ScoreVo> scores = scoreMapper.getAll(userId);
@@ -44,8 +43,7 @@ public class ScoreServiceImpl implements ScoreService {
      */
     @Override
     public List<ScoreVo> getScoreByUserName(String username) {
-        List<ScoreVo> scores = scoreMapper.getScoreByUserName(username);
-        return scores;
+        return scoreMapper.getScoreByUserName(username);
     }
 
     /**
@@ -71,8 +69,19 @@ public class ScoreServiceImpl implements ScoreService {
     public void setScore(ScoreDto scoredto) {
         Score score = new Score();
         BeanUtils.copyProperties(scoredto,score);
-        score.setTotalScore(scoredto.getUsualScore() * 0.4 + scoredto.getExamScore() * 0.6);
+        Double examScore = scoreMapper.getExamScoreById(score.getId());
+        score.setTotalScore(scoredto.getUsualScore() * 0.4 + examScore * 0.6);
         score.setGradeLevel(ScoreUtil.getGradeLevel(score.getTotalScore()));
         scoreMapper.setScore(score);
+    }
+
+    /**
+     * 根据姓名查询成绩（老师）
+     * @param username
+     * @return
+     */
+    @Override
+    public List<ScoreVo> getScoreByNameTeacher(String username) {
+        return scoreMapper.getScoreByNameTeacher(username);
     }
 }

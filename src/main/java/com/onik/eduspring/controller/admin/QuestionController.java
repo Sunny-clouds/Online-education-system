@@ -4,6 +4,8 @@ import com.onik.eduspring.dto.ExamTitleDto;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.QuestionService;
 import com.onik.eduspring.vo.QuestionVo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,11 +21,11 @@ import java.util.List;
 @RequestMapping("/api/question")
 @Slf4j
 @PreAuthorize("hasAnyAuthority('admin','teacher')")
+@Tag(name = "题库管理")
 public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
-
 
     /**
      * 新增题目
@@ -31,6 +33,7 @@ public class QuestionController {
      */
     @Transactional
     @PostMapping("/saveExamTitle")
+    @Operation(summary = "新增题目")
     public Result saveExamTitle(@RequestBody ExamTitleDto examTitleDto){
         questionService.saveExamTitle(examTitleDto);
         log.info("新增题目成功:{}", examTitleDto);
@@ -43,6 +46,7 @@ public class QuestionController {
      */
     @Transactional
     @PostMapping("/updateExamTitle")
+    @Operation(summary = "修改题目")
     public Result updateExamTitle(@RequestBody ExamTitleDto examTitleDto){
         questionService.updateExamTitle(examTitleDto);
         log.info("修改题目成功:{}", examTitleDto);
@@ -54,6 +58,7 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/getAllExamTitle")
+    @Operation(summary = "获取题库所有题目信息")
     public Result getAllExamTitle(){
         List<QuestionVo> examTitles = questionService.getAllExamTitle();
         log.info("获取题库所有题目信息:{}", examTitles.size());
@@ -67,6 +72,7 @@ public class QuestionController {
      */
     @Transactional
     @GetMapping("/delExamTitle/{id}")
+    @Operation(summary = "根据id删除题库题目")
     public Result delExamTitle(@PathVariable Long id){
         questionService.delExamTitle(id);
         log.info("删除题库题目成功:{}", id);

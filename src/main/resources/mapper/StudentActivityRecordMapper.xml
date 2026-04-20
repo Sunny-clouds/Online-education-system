@@ -17,4 +17,9 @@
     <delete id="delByStudentIdandCourseId">
         delete from student_activity_record where student_id=#{studentId} and course_id=#{courseId}
     </delete>
+
+    <!--根据学生id、活动id和课程ID查询学生活动记录-->
+    <select id="getByStuIdAndCourseIdAndActivityId" resultType="com.onik.eduspring.entity.StudentActivityRecord">
+        select * from student_activity_record where student_id=#{studentId} and activity_id=#{activityId} and course_id=#{courseId}
+    </select>
 </mapper>

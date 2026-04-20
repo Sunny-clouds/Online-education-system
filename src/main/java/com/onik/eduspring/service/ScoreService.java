@@ -19,4 +19,11 @@ public interface ScoreService {
 
     //修改成绩信息
     void setScore(ScoreDto scoredto);
+
+    /**
+     * 根据用户名查询成绩信息（老师）
+     * @param username
+     * @return
+     */
+    List<ScoreVo> getScoreByNameTeacher(String username);
 }

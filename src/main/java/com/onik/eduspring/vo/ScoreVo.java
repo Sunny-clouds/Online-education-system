@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ScoreVo {
 
+    private Long id;
     private String userName;
     private String title;
     private String examName;

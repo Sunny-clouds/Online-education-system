@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableMethodSecurity   // 开启方法级权限控制，例如 @PreAuthorize
 public class SecurityConfig {
-
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     @Bean
@@ -28,13 +27,16 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable())
                 // 无状态
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) )
                 // 配置接口权限
                 .authorizeHttpRequests(auth -> auth
                         // 登录注册接口放行
-                        .requestMatchers("/api/user/login", "/api/user/register").permitAll()
+                        .requestMatchers("/api/user/login",
+                                "/api/user/register",
+                                "/doc.html",
+                                "/webjars/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**").permitAll()
                         // 其他所有接口必须登录
                         .anyRequest().authenticated()
                 )

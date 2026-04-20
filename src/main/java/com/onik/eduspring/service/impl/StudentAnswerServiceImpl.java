@@ -2,8 +2,10 @@ package com.onik.eduspring.service.impl;
 
 import com.onik.eduspring.dto.PublishStudentExamDto;
 import com.onik.eduspring.dto.StudentAnswerDto;
+import com.onik.eduspring.entity.Score;
 import com.onik.eduspring.entity.StudentActivityRecord;
 import com.onik.eduspring.entity.StudentAnswer;
+import com.onik.eduspring.entity.TestPaper;
 import com.onik.eduspring.mapper.*;
 import com.onik.eduspring.service.StudentAnswerService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,10 @@ public class StudentAnswerServiceImpl implements StudentAnswerService {
     private ActivityMapper activityMapper;
     @Autowired
     private StudentActivityRecordMapper studentActivityRecordMapper;
+    @Autowired
+    private ScoreMapper scoreMapper;
+    @Autowired
+    private TestPaperMapper testPaperMapper;
 
     /**
      * 保存学生的答案和试卷信息
@@ -84,27 +90,36 @@ public class StudentAnswerServiceImpl implements StudentAnswerService {
         BeanUtils.copyProperties(studentAnswerDtos.getStudentPaper(), studentActivityRecord);
         studentActivityRecord.setScore(activityMapper.getScore(studentActivityRecord.getActivityId()));
         studentActivityRecord.setCourseId(activityMapper.getCourseIdById(studentActivityRecord.getActivityId()));
+        // 判断是否已经参加过活动
+        StudentActivityRecord s1 = studentActivityRecordMapper.getByStuIdAndCourseIdAndActivityId(studentActivityRecord);
+        Long studentId = studentAnswerDtos.getStudentPaper().getStudentId();
+        Long paperId = studentAnswerDtos.getStudentPaper().getPaperId();
+        Score score = new Score();
+        score.setStudentId(studentId);
+        score.setCourseId(activityMapper.getCourseIdById(studentAnswerDtos.getStudentPaper().getActivityId()));
+        score.setExamScore((double) totalScore);
+        TestPaper testPaper = testPaperMapper.getTitleAndTeaById(paperId);
+        score.setExamName(testPaper.getTitle());
+        score.setTeacherId(testPaper.getCreateUser());
+        if (s1 ==  null){studentActivityRecordMapper.save(studentActivityRecord);}
+        // 判断是否是第一次考试
         if (studentAnswer == null){
             studentAnswerMapper.save(studentAnswers);
             StudentAnswerDto answerDto = studentAnswerMapper.getByStudentIdAndPaperId(first);
             studentAnswerDtos.getStudentPaper().setTotalScore(answerDto.getCountScore());
             studentAnswerDtos.getStudentPaper().setAttempt(attempt);
             studentPaperMapper.save(studentAnswerDtos.getStudentPaper());
-            // TODO 把成绩插入成绩表
-            studentActivityRecordMapper.save(studentActivityRecord);
+            scoreMapper.save(score);
             return totalScore;
         }else if (studentAnswer.getCountScore() < totalScore){
             studentAnswerMapper.delByStudentIdAndPaperId(studentAnswer);
             studentAnswerMapper.save(studentAnswers);
             studentAnswerDtos.getStudentPaper().setTotalScore(totalScore);
         }
-        Long studentId = studentAnswerDtos.getStudentPaper().getStudentId();
-        Long paperId = studentAnswerDtos.getStudentPaper().getPaperId();
         int attempts = studentPaperMapper.getAttemptByUseridAndPaperId(paperId , studentId);
         studentAnswerDtos.getStudentPaper().setAttempt(attempts + 1);
         studentPaperMapper.update(studentAnswerDtos.getStudentPaper());
-        // TODO 把新成绩插入成绩表
-        studentActivityRecordMapper.save(studentActivityRecord);
+        scoreMapper.updateScore(score);
         return totalScore;
     }
 }

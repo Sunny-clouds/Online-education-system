@@ -5,6 +5,8 @@ import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.TestPaperService;
 import com.onik.eduspring.util.BaseContext;
 import com.onik.eduspring.vo.TestPaperVo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/testPaper")
 @Slf4j
+@Tag(name = "试卷管理")
 public class TestPaperController {
 
     @Autowired
@@ -32,6 +35,7 @@ public class TestPaperController {
      * @return
      */
     @GetMapping("/getTestPaperById/{id}")
+    @Operation(summary = "获取试卷信息")
     public Result getTestPaperById(@PathVariable Long id){
         Long userId = BaseContext.getUserId();
         List<TestPaperVo> testPaperVo = testPaperService.getTestPaperById(id,userId);

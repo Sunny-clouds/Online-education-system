@@ -20,6 +20,10 @@ public class ExamActivityServiceImpl implements ExamActivityService {
     @Autowired
     private ActivityService activityService;
 
+    /**
+     * 创建考试
+     * @param dto
+     */
     @Transactional
     public void publishExamActivity(PublishExamDto dto) {
         // 1、创建试卷

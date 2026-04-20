@@ -5,9 +5,10 @@ import com.onik.eduspring.dto.UserLoginDto;
 import com.onik.eduspring.dto.UserPasswordDto;
 import com.onik.eduspring.entity.User;
 import com.onik.eduspring.result.Result;
-import com.onik.eduspring.service.CourseService;
 import com.onik.eduspring.service.UserService;
 import com.onik.eduspring.vo.UserLoginVo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/api/user")
+@Tag(name = "用户模块")
 public class UserController {
 
     @Autowired
@@ -30,6 +32,7 @@ public class UserController {
      * @param userDto
      */
     @PostMapping("/register")
+    @Operation(summary = "用户注册")
     public Result register(@RequestBody UserDto userDto) {
         userService.save(userDto);
         log.info("用户注册成功:{}", userDto);
@@ -42,6 +45,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
+    @Operation(summary = "用户登录")
     public Result login(@RequestBody UserLoginDto userLoginDto){
         log.info("用户登录中...:{}", userLoginDto);
         UserLoginVo user = userService.login(userLoginDto);
@@ -58,6 +62,7 @@ public class UserController {
      * @param userDto
      */
     @PutMapping("/update")
+    @Operation(summary = "修改用户信息")
     public Result updateUser(@RequestBody UserDto userDto) {
         userService.update(userDto);
         log.info("修改用户信息成功:{}", userDto);
@@ -69,6 +74,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/teacherList")
+    @Operation(summary = "获取所有老师")
     public Result getTeacherList() {
         List<User> list = userService.getAllTeacher();
         log.info("获取所有老师成功:{}", list.size());
@@ -80,6 +86,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/setPassword")
+    @Operation(summary = "修改密码")
     private Result setPassword(@RequestBody UserPasswordDto userPasswordDto){
         log.info("修改密码:{}", userPasswordDto);
         return userService.setPassword(userPasswordDto);
