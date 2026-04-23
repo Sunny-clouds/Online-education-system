@@ -39,7 +39,7 @@ public interface QuestionMapper {
      * @param type
      * @return
      */
-    List<Question> selectByType(int type, int count, Long courseId);
+    List<Question> selectByType(int type, Long courseId);
 
     /**
      * 根据题目id获取正确答案

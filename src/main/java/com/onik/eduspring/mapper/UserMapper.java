@@ -10,15 +10,6 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    /**
-     * 根据用户名查询用户
-     * @param username
-     * @return
-     */
-    @Select("select u.id, u.username,u.password, u.nickname ,u.email,u.phone,r.role_code,u.avatar from user u " +
-            "left join role r on u.role = r.id " +
-            "where u.username = #{username} and u.status != 0")
-    UserLoginVo getByUserName(String username);
 
     /**
      * 新增用户
@@ -61,4 +52,12 @@ public interface UserMapper {
      */
     @Select("select password from user where id = #{id}")
     String getUserById(Long id);
+
+    /**
+     * 根据id查询角色
+     * @param userId
+     * @return
+     */
+    @Select("select role from user where id = #{userId}")
+    Integer getUserRoleById(Long userId);
 }

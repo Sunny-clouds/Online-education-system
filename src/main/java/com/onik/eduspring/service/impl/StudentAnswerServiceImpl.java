@@ -8,6 +8,7 @@ import com.onik.eduspring.entity.StudentAnswer;
 import com.onik.eduspring.entity.TestPaper;
 import com.onik.eduspring.mapper.*;
 import com.onik.eduspring.service.StudentAnswerService;
+import com.onik.eduspring.vo.StudentAnswerVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,5 +122,15 @@ public class StudentAnswerServiceImpl implements StudentAnswerService {
         studentPaperMapper.update(studentAnswerDtos.getStudentPaper());
         scoreMapper.updateScore(score);
         return totalScore;
+    }
+
+    /**
+     * 根据试卷ID获取学生答案信息
+     * @param paperId
+     * @return
+     */
+    @Override
+    public List<StudentAnswerVo> getStudentAnswerByPaperId(Long paperId) {
+        return studentAnswerMapper.getStudentAnswerByPaperId(paperId);
     }
 }

@@ -1,26 +1,27 @@
-package com.onik.eduspring.dto;
+package com.onik.eduspring.vo;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExamTitleDto {
+public class StudentAnswerVo {
 
-    private Long id;
-    private Long type;
-    private Long courseId;
+    private Long questionId;
+    private Integer type;
     private String content;
     private String optionA;
     private String optionB;
     private String optionC;
     private String optionD;
     private String correctAnswer;
-    private String analysis;
-    private Integer score;
-    private Integer difficulty;
-    private Long createUser;
+    private Integer totalA;
+    private Integer totalB;
+    private Integer totalC;
+    private Integer totalD;
+    private Integer totalTrue;
+    private Integer totalFalse;
 }

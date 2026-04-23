@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onik.eduspring.mapper.HomeWorkMapper">
+
+
+    <!--保存作业-->
+    <insert id="save">
+        insert into homework(activity_id,course_id,student_id,content,submit_time)
+        values(#{activityId},#{courseId},#{studentId},#{content},#{submitTime})
+    </insert>
+
+    <!--更新作业-->
+    <update id="update">
+        update homework set content=#{content},submit_time=#{submitTime}
+        where student_id = #{studentId} and course_id = #{courseId} and activity_id = #{activityId}
+    </update>
+
+    <!--查询所有作业-->
+    <select id="getAll" resultType="com.onik.eduspring.vo.HomeWorkVo">
+        select h.id,u.nickname as studentName,h.content,h.submit_time from homework h
+        left join user u on h.student_id=u.id
+        where course_id=#{courseId} and activity_id=#{activityId}
+    </select>
+
+    <!--根据学生id和课程id查询作业-->
+    <select id="getByStudentIdAndCourseId" resultType="com.onik.eduspring.vo.HomeWorkVo">
+        select h.id,u.nickname as studentName,h.content,h.submit_time from homework h
+        left join user u on h.student_id=u.id
+        where student_id=#{studentId} and course_id=#{courseId} and activity_id=#{activityId}
+    </select>
+</mapper>

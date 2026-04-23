@@ -16,7 +16,7 @@ public class PaperQuestion {
     private Long id;
     private Long paperId;
     private Long questionId;
-    private Double score;
+    private int score;
     private Integer sort;
 
 }

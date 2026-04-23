@@ -18,6 +18,7 @@ public class ActivityVo {
     private LocalDateTime createTime;
     private Integer commentCount;
     private Integer examSum;
+    private Integer homeworkSum;
     private Integer type;
     private Integer status;
     private LocalDateTime startTime;

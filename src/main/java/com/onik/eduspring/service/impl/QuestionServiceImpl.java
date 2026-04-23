@@ -4,6 +4,7 @@ import com.onik.eduspring.dto.ExamTitleDto;
 import com.onik.eduspring.entity.Question;
 import com.onik.eduspring.mapper.QuestionMapper;
 import com.onik.eduspring.service.QuestionService;
+import com.onik.eduspring.util.BaseContext;
 import com.onik.eduspring.vo.QuestionVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -26,10 +27,11 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public void saveExamTitle(ExamTitleDto examTitleDto) {
+        Long userId = BaseContext.getUserId();
         Question question = new Question();
         BeanUtils.copyProperties(examTitleDto,question);
+        question.setCreateUser(userId);
         question.setCreateTime(LocalDateTime.now());
-        question.setUpdateTime(LocalDateTime.now());
         questionMapper.saveExamTitle(question);
     }
 

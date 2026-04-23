@@ -3,9 +3,11 @@
 <mapper namespace="com.onik.eduspring.mapper.QuestionMapper">
 
     <!--添加题目-->
-    <insert id="saveExamTitle" parameterType="com.onik.eduspring.dto.ExamTitleDto">
-        insert into question(type,course_id,content,option_a,option_b,option_c,option_d,correct_answer,analysis,score,difficulty,create_user,create_time,update_time)
-        values(#{type},#{courseId},#{content},#{optionA},#{optionB},#{optionC},#{optionD},#{correctAnswer},#{analysis},#{score},#{difficulty},#{createUser},#{createTime},#{updateTime})
+    <insert id="saveExamTitle" parameterType="com.onik.eduspring.entity.Question">
+        insert into question(type,course_id,content,option_a,option_b,option_c,option_d,
+                             correct_answer,analysis,score,difficulty,create_user,create_time)
+        values(#{type},#{courseId},#{content},#{optionA},#{optionB},#{optionC},#{optionD},
+               #{correctAnswer},#{analysis},#{score},#{difficulty},#{createUser},#{createTime})
     </insert>
 
     <!--修改题目-->
@@ -36,7 +38,9 @@
 
     <!--获取题库所有题目信息-->
     <select id="getAllExamTitle" resultType="com.onik.eduspring.vo.QuestionVo">
-        select q.id,q.type,c.title,q.content,q.option_a,q.option_b,q.option_c,q.option_d,q.correct_answer,q.analysis,q.score,q.difficulty,u.nickname,q.create_time,q.update_time
+        select q.id,q.type,c.title,q.content,q.option_a,q.option_b,
+               q.option_c,q.option_d,q.correct_answer,q.analysis,
+               q.score,q.difficulty,u.nickname,q.create_time,q.update_time
         from question q
         left join user u on q.create_user = u.id
         left join course c on q.course_id = c.id
@@ -44,7 +48,7 @@
 
     <!--获取指定题型题目-->
     <select id="selectByType" resultType="com.onik.eduspring.entity.Question">
-        select * from question where type = #{type} and course_id = #{courseId} ORDER BY RAND() LIMIT #{count}
+        select * from question where type = #{type} and course_id = #{courseId}
     </select>
 
     <!--根据题目id获取正确答案-->

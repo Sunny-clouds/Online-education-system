@@ -10,9 +10,11 @@ import com.onik.eduspring.vo.TestPaperVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -70,17 +72,22 @@ public class TestPaperServiceImpl implements TestPaperService {
      * 自动组成试卷
      * @param testPaperDto
      */
+    @Transactional
     @Override
     public void AutoGenerateTestPaper(TestPaperDto testPaperDto) {
-        // 题型比例
-        int singleTarget = (int)(testPaperDto.getTotalScore() * 0.5 / 2);
-        int multiTarget = (int)(testPaperDto.getTotalScore() * 0.3 / 3);
-        int judgeTarget = testPaperDto.getTotalScore() - singleTarget * 2 - multiTarget * 3;
+        // 1、计算各题型目标分数
+        int singleScore = (int)(testPaperDto.getTotalScore() * 0.5);
+        int multiScore = (int)(testPaperDto.getTotalScore() * 0.3);
+        int judgeScore = testPaperDto.getTotalScore() - singleScore - multiScore;
 
+        // 2、按分数抽题
         List<Question> finalList = new ArrayList<>();
-        finalList.addAll(selectQuestionsByCount(1, singleTarget, testPaperDto.getCourseId()));
-        finalList.addAll(selectQuestionsByCount(2, multiTarget, testPaperDto.getCourseId()));
-        finalList.addAll(selectQuestionsByCount(3, judgeTarget, testPaperDto.getCourseId()));
+        finalList.addAll(selectQuestionsByScore(1, singleScore, testPaperDto.getCourseId()));
+        finalList.addAll(selectQuestionsByScore(2, multiScore, testPaperDto.getCourseId()));
+        finalList.addAll(selectQuestionsByScore(3, judgeScore, testPaperDto.getCourseId()));
+
+        // 3、打乱整张试卷
+        Collections.shuffle(finalList);
         // 写入试卷
         List<PaperQuestion> paperQuestions = new ArrayList<>();
         int sort = 1;
@@ -96,17 +103,43 @@ public class TestPaperServiceImpl implements TestPaperService {
     }
 
     /**
-     * 查询指定类型的题目
-     * @param type 类型
-     * @param count 数量
+     * 根据分数获取题目
+     * @param type 题型
+     * @param targetScore 目标分数
      * @param courseId 课程id
      * @return
      */
-    public List<Question> selectQuestionsByCount(int type, int count, Long courseId) {
-        List<Question> questionBank = questionMapper.selectByType(type,count,courseId);
-        if (questionBank.size() < count) {
-            throw new RuntimeException("题库不足，无法抽题，type=" + type);
+    public List<Question> selectQuestionsByScore(int type, int targetScore, Long courseId) {
+        // 1.根据课程id获取题库
+        List<Question> questionBank = questionMapper.selectByType(type, courseId);
+        if (questionBank.isEmpty()) {
+            throw new RuntimeException("题库为空，type=" + type);
         }
-        return questionBank;
+        // 2. 打乱顺序（保证随机性）
+        Collections.shuffle(questionBank);
+        List<Question> result = new ArrayList<>();
+        int total = 0;
+        int tolerance = 2; // 允许误差
+        // 3. 贪心算法选题（允许轻微超分）
+        for (Question q : questionBank) {
+            int nextTotal = total + q.getScore();
+            // 如果加这题会超过“目标 + 最大超分”，就跳过
+            if (nextTotal > targetScore + tolerance) {
+                continue;
+            }
+            result.add(q);
+            total += q.getScore();
+            // 达到或超过目标就停止（允许超一点）
+            if (total >= targetScore) {
+                break;
+            }
+        }
+        // 4. 容错机制（关键）
+        if (Math.abs(total - targetScore) > tolerance) {
+            throw new RuntimeException(
+                    String.format("分数误差过大: type=%d, 目标=%d, 实际=%d", type, targetScore, total)
+            );
+        }
+        return result;
     }
 }

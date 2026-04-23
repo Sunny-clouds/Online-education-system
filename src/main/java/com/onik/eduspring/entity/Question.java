@@ -25,7 +25,7 @@ public class Question {
     private String optionD;
     private String correctAnswer;
     private String analysis;
-    private Double score;
+    private Integer score;
     private Integer difficulty;
     private Long createUser;
     private LocalDateTime createTime;

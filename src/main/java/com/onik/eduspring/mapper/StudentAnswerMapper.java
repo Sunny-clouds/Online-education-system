@@ -2,6 +2,7 @@ package com.onik.eduspring.mapper;
 
 import com.onik.eduspring.dto.StudentAnswerDto;
 import com.onik.eduspring.entity.StudentAnswer;
+import com.onik.eduspring.vo.StudentAnswerVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -26,4 +27,11 @@ public interface StudentAnswerMapper {
      * @param first
      */
     void delByStudentIdAndPaperId(StudentAnswerDto first);
+
+    /**
+     * 根据试卷ID获取学生答案信息
+     * @param paperId
+     * @return
+     */
+    List<StudentAnswerVo> getStudentAnswerByPaperId(Long paperId);
 }
