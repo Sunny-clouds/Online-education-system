@@ -26,6 +26,7 @@ public class AdminServiceImpl implements AdminService {
      * @param id
      * @param role
      */
+    @Transactional
     @Override
     public void setRole(Long id, Integer role) {
         adminMapper.setRole(id, role);
@@ -67,6 +68,7 @@ public class AdminServiceImpl implements AdminService {
      * @param id
      * @param status
      */
+    @Transactional
     @Override
     public void setStatus(Long id, Integer status) {
         adminMapper.setStatus(id, status);

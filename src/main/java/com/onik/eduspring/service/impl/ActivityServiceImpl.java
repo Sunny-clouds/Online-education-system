@@ -112,6 +112,7 @@ public class ActivityServiceImpl implements ActivityService {
      * 设置活动的开始时间和结束时间
      * @param activityDto
      */
+    @Transactional
     @Override
     public void setStartAndEndTime(ActivityDto activityDto) {
         Activity activity = new Activity();

@@ -121,6 +121,7 @@ public class DiscussionServiceImpl implements DiscussionService {
      * 更新帖子点赞数
      * @param id
      */
+    @Transactional
     @Override
     public void updatePostLike(Long id) {
         discussionMapper.updatePostLike(id);

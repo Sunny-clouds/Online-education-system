@@ -39,8 +39,8 @@ public class UserProgressServiceImpl implements UserProgressService {
         Long userId = BaseContext.getUserId();
         Integer role = userMapper.getUserRoleById(userId);
         if (role == 3){
-            userProgressDto.setStudentId(userId);
             BeanUtils.copyProperties(userProgressDto,userProgress);
+            userProgress.setStudentId(userId);
             //获取用户视频进度
             Double progress = userProgressMapper.getProgressByVideoId(userProgress);
             //获取视频时长
@@ -53,17 +53,33 @@ public class UserProgressServiceImpl implements UserProgressService {
             }else if (p > progress) {
                 userProgressMapper.update(userProgress);
             }
-            //根据课程id查看视频总时长
-            Long sumDuration = courseResourceMapper.getDurationByCourseId(userProgressDto.getCourseId());
-            //获取用户视频大于90的视频id
-            List<Long> videoId =userProgressMapper.getVideoId(userId);
-            if (!videoId.isEmpty()){
-                //根据大于90的视频id获取总时长
-                Long oldDuration = courseResourceMapper.getDurationByListVideoId(videoId);
-                userProgressDto.setProgress(oldDuration * 100.0 / sumDuration);
-                userProgressDto.setStatus(userProgressDto.getProgress() > 90 ? 2 : 1);
-                studentCourseMapper.updateProgress(userProgressDto);
-            }
+            List<UserProgress> list = getProgressByStuIdAndVideoId(userProgressDto);
+            Integer size = courseResourceMapper.getSizeByCourseId(userProgressDto.getCourseId());
+            userProgressDto.setProgress( list.size() * 100.0 / size);
+            userProgressDto.setStatus(userProgressDto.getProgress() > 90 ? 2 : 1);
+            studentCourseMapper.updateProgress(userProgressDto);
+            ////根据课程id查看视频总时长
+            //Long sumDuration = courseResourceMapper.getDurationByCourseId(userProgressDto.getCourseId());
+            ////获取用户视频大于90的视频id
+            //List<Long> videoId =userProgressMapper.getVideoId(userId);
+            //if (!videoId.isEmpty()){
+            //    //根据大于90的视频id获取总时长
+            //    Long oldDuration = courseResourceMapper.getDurationByListVideoId(videoId);
+            //    userProgressDto.setProgress(oldDuration * 100.0 / sumDuration);
+            //    userProgressDto.setStatus(userProgressDto.getProgress() > 90 ? 2 : 1);
+            //
+            //}
         }
+    }
+
+    /**
+     * 根据学生id获取视频进度
+     * @param userProgressDto
+     * @return
+     */
+    @Override
+    public List<UserProgress> getProgressByStuIdAndVideoId(UserProgressDto userProgressDto) {
+        userProgressDto.setStudentId(BaseContext.getUserId());
+        return userProgressMapper.getProgressByStuIdAndVideoId(userProgressDto);
     }
 }

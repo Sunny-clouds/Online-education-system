@@ -10,6 +10,7 @@ import com.onik.eduspring.vo.ExamVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -49,6 +50,7 @@ public class ExamServiceImpl implements ExamService {
      * 修改考试信息
      * @param examDto
      */
+    @Transactional
     @Override
     public Result updateExam(ExamDto examDto) {
         LocalDateTime now = LocalDateTime.now();

@@ -56,4 +56,11 @@ public interface CourseResourceMapper {
      * @return
      */
     Long getDurationByListVideoId(List<Long> videoId);
+
+    /**
+     * 根据课程ID获取课程资源数量
+     * @param courseId
+     * @return
+     */
+    Integer getSizeByCourseId(Long courseId);
 }

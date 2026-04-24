@@ -12,6 +12,7 @@ import com.onik.eduspring.vo.HomeWorkVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,6 +31,7 @@ public class HomeWorkServiceImpl implements HomeWorkService {
      * 新增作业
      * @param homeWorkDto
      */
+    @Transactional
     @Override
     public void save(HomeWorkDto homeWorkDto) {
         Long userId = BaseContext.getUserId();

@@ -1,5 +1,6 @@
 package com.onik.eduspring.mapper;
 
+import com.onik.eduspring.dto.UserProgressDto;
 import com.onik.eduspring.entity.UserProgress;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -33,4 +34,10 @@ public interface UserProgressMapper {
      */
     List<Long> getVideoId(Long userId);
 
+    /**
+     * 根据用户id和视频id获取用户课程进度
+     * @param userProgressDto
+     * @return
+     */
+    List<UserProgress> getProgressByStuIdAndVideoId(UserProgressDto userProgressDto);
 }

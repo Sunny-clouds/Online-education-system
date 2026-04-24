@@ -29,4 +29,12 @@
     <select id="getVideoId" resultType="java.lang.Long">
         SELECT video_id FROM user_video_progress WHERE progress > 90 and student_id = #{userId}
     </select>
+
+    <!--根据学生id和视频id查询用户课程进度-->
+    <select id="getProgressByStuIdAndVideoId" resultType="com.onik.eduspring.entity.UserProgress">
+        SELECT u.id,u.student_id,u.video_id,u.progress
+        FROM user_video_progress u
+        LEFT JOIN course_resource c on u.video_id = c.id
+        WHERE u.student_id = #{studentId} AND c.course_id = #{courseId}
+    </select>
 </mapper>

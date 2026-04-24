@@ -41,4 +41,7 @@
             #{item}
         </foreach>
     </select>
+    <select id="getSizeByCourseId" resultType="java.lang.Integer">
+        select count(*) from course_resource where course_id = #{courseId}
+    </select>
 </mapper>

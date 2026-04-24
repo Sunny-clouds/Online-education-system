@@ -52,6 +52,7 @@ public class HomeWorkController {
      * @param homeWorkDto
      * @return
      */
+    @Operation(summary = "根据学生id和课程id查询作业")
     @PostMapping("/getByStudentIdAndCourseId")
     public Result getByStudentIdAndCourseId(@RequestBody HomeWorkDto homeWorkDto){
         HomeWorkVo homeWork = homeWorkService.getByStudentIdAndCourseId(homeWorkDto);

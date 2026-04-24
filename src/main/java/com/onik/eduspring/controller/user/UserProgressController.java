@@ -2,6 +2,7 @@ package com.onik.eduspring.controller.user;
 
 
 import com.onik.eduspring.dto.UserProgressDto;
+import com.onik.eduspring.entity.UserProgress;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.UserProgressService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user/progress")
@@ -35,6 +38,20 @@ public class UserProgressController {
         userProgressService.setProgressByVideoId(userProgressDto);
         log.info("设置用户课程进度:{}",userProgressDto);
         return Result.success();
+    }
+
+    /**
+     * 根据学生id获取视频进度
+     * @param userProgressDto
+     * @return
+     */
+    @PreAuthorize("hasAnyAuthority('student')")
+    @PostMapping("/getProgress")
+    @Operation(summary = "获取用户每个视频进度")
+    public Result getProgress(@RequestBody UserProgressDto userProgressDto) {
+        List<UserProgress> progress = userProgressService.getProgressByStuIdAndVideoId(userProgressDto);
+        log.info("获取用户课程进度:{}",userProgressDto);
+        return Result.success(progress);
     }
 
 }
