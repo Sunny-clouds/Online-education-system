@@ -69,9 +69,10 @@
         JOIN user stu ON s.student_id = stu.id
         JOIN user tea ON s.teacher_id = tea.id
         JOIN course c ON s.course_id = c.id
-        where
-        <if test="username != null and username != ''">
-            stu.nickname LIKE CONCAT('%', #{username}, '%')
-        </if>
+        <where>
+            <if test="username != null and username != ''">
+                stu.nickname LIKE CONCAT('%', #{username}, '%')
+            </if>
+        </where>
     </select>
 </mapper>

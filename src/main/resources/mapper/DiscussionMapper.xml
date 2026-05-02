@@ -24,7 +24,7 @@
         GROUP BY d.id
     </select>
 
-    <!--获取所有讨论信息-->
+    <!--获取所有帖子-->
     <select id="getAll" resultType="com.onik.eduspring.vo.DiscussionVo">
         SELECT d.id,u.nickname as username,c.title as courseName,d.title,d.content,d.like_count,COUNT(dc.id) AS comment_count,d.create_time
         FROM discussion_post d
@@ -34,7 +34,7 @@
         GROUP BY d.id
     </select>
 
-    <!--根据课程名称查询讨论信息-->
+    <!--根据课程名称查询帖子-->
     <select id="getByCourseName" resultType="com.onik.eduspring.vo.DiscussionVo">
         SELECT d.id,u.nickname as username,c.title as courseName,d.title,d.content,d.like_count,COUNT(dc.id) AS comment_count,d.create_time
         FROM discussion_post d
@@ -47,7 +47,7 @@
 
     <!--根据帖子id查询帖子下的评论-->
     <select id="getByPostId" resultType="com.onik.eduspring.vo.DiscussionCommentVo">
-        SELECT c.id,c.post_id,c.user_id,u.nickname,u.avatar,c.parent_id,c.content,c.like_count,c.create_time
+        SELECT c.id,c.post_id,c.user_id,u.nickname,u.avatar,u.role,c.parent_id,c.content,c.like_count,c.create_time
         FROM discussion_comment c
         LEFT JOIN user u ON c.user_id = u.id
         WHERE c.post_id = #{id}

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onik.eduspring.mapper.TestPaperMapper">
+
+    <!--根据试卷ID修改试卷总分-->
     <update id="updateTotalScore">
         UPDATE test_paper SET total_score = #{realTotal} WHERE id = #{id}
     </update>
@@ -17,6 +19,7 @@
 
     <!--新增试卷-->
     <insert id="saveTestPaper" parameterType="com.onik.eduspring.entity.TestPaper" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO test_paper(title,course_id,total_score,create_user,create_time) VALUES(#{title},#{courseId},#{totalScore},#{createUser},#{createTime})
+        INSERT INTO test_paper(title,course_id,total_score,create_user,create_time)
+        VALUES(#{title},#{courseId},#{totalScore},#{createUser},#{createTime})
     </insert>
 </mapper>

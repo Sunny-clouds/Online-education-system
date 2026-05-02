@@ -22,12 +22,14 @@
 
     <!--根据视频id查询用户观看进度-->
     <select id="getProgressByVideoId" resultType="java.lang.Double">
-        SELECT progress FROM user_video_progress WHERE student_id = #{studentId} AND video_id = #{videoId}
+        SELECT progress FROM user_video_progress
+        WHERE student_id = #{studentId} AND video_id = #{videoId}
     </select>
 
     <!--获取大于90的视频id-->
     <select id="getVideoId" resultType="java.lang.Long">
-        SELECT video_id FROM user_video_progress WHERE progress > 90 and student_id = #{userId}
+        SELECT video_id FROM user_video_progress
+        WHERE progress > 90 and student_id = #{userId}
     </select>
 
     <!--根据学生id和视频id查询用户课程进度-->

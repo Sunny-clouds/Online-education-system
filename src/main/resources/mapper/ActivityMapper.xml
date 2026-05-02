@@ -46,7 +46,8 @@
 
     <!--根据学生id查询学生是否参与过该活动-->
     <select id="getByActivityId">
-        select * from activity_discussion_record where student_id = #{studentId} and activity_id = #{activityId}
+        select * from activity_discussion_record
+        where student_id = #{studentId} and activity_id = #{activityId}
     </select>
 
     <!--根据活动id获取结束时间-->
@@ -56,7 +57,8 @@
 
     <!--设置活动开始时间和结束时间-->
     <update id="setStartAndEndTime">
-        update activity set start_time = #{startTime},end_time = #{endTime} where id = #{id} and status != 0
+        update activity set start_time = #{startTime},end_time = #{endTime}
+        where id = #{id} and status != 0
     </update>
 
     <!--根据活动id获取课程id-->

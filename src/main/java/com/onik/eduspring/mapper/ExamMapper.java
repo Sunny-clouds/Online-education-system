@@ -3,7 +3,6 @@ package com.onik.eduspring.mapper;
 import com.onik.eduspring.entity.Exam;
 import com.onik.eduspring.vo.ExamVo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface ExamMapper {
@@ -39,6 +38,5 @@ public interface ExamMapper {
      * @param id
      * @return
      */
-    @Select("select id from activity where biz_id = (select id from exam where paper_id = #{id})")
     Long getExamId(Long id);
 }

@@ -43,17 +43,10 @@ public class UserServiceImpl implements UserService {
         }
         String role;
         switch (user.getRole()) {
-            case 1:
-                role = "admin";
-                break;
-            case 2:
-                role = "teacher";
-                break;
-            case 3:
-                role = "student";
-                break;
-            default:
-                role = "unknown";
+            case 1 -> role = "admin";
+            case 2 -> role = "teacher";
+            case 3 -> role = "student";
+            default -> role = "unknown";
         }
         //生成JWT令牌
         Map<String, Object> claims = new HashMap<>();

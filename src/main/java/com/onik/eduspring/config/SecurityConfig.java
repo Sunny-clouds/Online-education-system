@@ -4,11 +4,13 @@ import com.onik.eduspring.filter.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 /**
  * SpringSecurity配置类
@@ -18,9 +20,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    private CorsConfigurationSource corsConfigurationSource;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                // 启用跨域配置
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 // 关闭csrf（前后端分离项目通常关闭）
                 .csrf(csrf -> csrf.disable())
                 // 关闭默认登录
@@ -30,6 +37,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) )
                 // 配置接口权限
                 .authorizeHttpRequests(auth -> auth
+                        // 放行 OPTIONS 预检请求
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // 登录注册接口放行
                         .requestMatchers("/api/user/login",
                                 "/api/user/register",

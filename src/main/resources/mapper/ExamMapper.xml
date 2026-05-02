@@ -9,8 +9,15 @@
         left join test_paper t on e.paper_id = t.id
         WHERE e.id = #{bizId}
     </select>
+
+    <!--根据试卷id查询最大尝试次数-->
     <select id="getMaxAttemptByPaperId" resultType="java.lang.Integer" parameterType="java.lang.Long">
         SELECT max_attempt FROM exam WHERE paper_id = #{id}
+    </select>
+
+    <!--获取考试信息的id-->
+    <select id="getExamId" resultType="java.lang.Long">
+        select id from activity where biz_id = (select id from exam where paper_id = #{id})
     </select>
 
     <!--保存考试信息-->

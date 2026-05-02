@@ -34,8 +34,7 @@
     </select>
 
     <!--根据视频id获取课程时长-->
-    <select id="getDurationByListVideoId" resultType="java.lang.Long"
-            parameterType="java.util.List">
+    <select id="getDurationByListVideoId" resultType="java.lang.Long" parameterType="java.util.List">
         select sum(duration) from course_resource where id in
         <foreach item="item" collection="list" open="(" separator="," close=")">
             #{item}

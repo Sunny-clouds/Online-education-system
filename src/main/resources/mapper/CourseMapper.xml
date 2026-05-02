@@ -5,7 +5,8 @@
 
     <!--插入课程信息-->
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into course(title, description, cover, teacher_id, create_time) values (#{title}, #{description}, #{cover}, #{teacherId}, #{createTime})
+        insert into course(title, description, cover, teacher_id, create_time)
+        values (#{title}, #{description}, #{cover}, #{teacherId}, #{createTime})
     </insert>
 
     <!--根据 id 修改课程信息-->

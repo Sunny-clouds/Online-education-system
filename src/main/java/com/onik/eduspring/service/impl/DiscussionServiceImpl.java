@@ -82,25 +82,35 @@ public class DiscussionServiceImpl implements DiscussionService {
      * 将平铺评论列表组装成树状结构
      */
     private List<DiscussionCommentVo> buildTree(List<DiscussionCommentVo> discussionCommentVo) {
-        // 按 parentId 分组
-        Map<Long, List<DiscussionCommentVo>> grouped = discussionCommentVo.stream()
-                .collect(Collectors.groupingBy(DiscussionCommentVo::getParentId));
-        // 一级评论
-        List<DiscussionCommentVo> rootComments = grouped.getOrDefault(0L, new ArrayList<>());
-        // 递归挂子评论
-        rootComments.forEach(comment -> attachChildren(comment, grouped));
-        return rootComments;
-    }
-
-    /**
-     * 递归挂子评论到 parent 的 children 字段
-     */
-    private void attachChildren(DiscussionCommentVo parent, Map<Long, List<DiscussionCommentVo>> grouped) {
-        List<DiscussionCommentVo> children = grouped.get(parent.getId());
-        if (children != null) {
-            parent.setChildren(children);
-            children.forEach(child -> attachChildren(child, grouped));
+        // 根据评论 id 建立映射
+        Map<Long, DiscussionCommentVo> commentMap = discussionCommentVo.stream()
+                .collect(Collectors.toMap(
+                        DiscussionCommentVo::getId,
+                        comment -> comment,
+                        (oldValue, newValue) -> oldValue));
+        List<DiscussionCommentVo> rootComments = new ArrayList<>();
+        for (DiscussionCommentVo comment : discussionCommentVo) {
+            Long parentId = comment.getParentId();
+            // parentId 为 null 或 0，都是一级评论
+            if (parentId == null || parentId == 0L) {
+                rootComments.add(comment);
+                continue;
+            }
+            // 找父评论
+            DiscussionCommentVo parentComment = commentMap.get(parentId);
+            if (parentComment != null) {
+                // 防止父评论 children 是 null
+                if (parentComment.getChildren() == null) {
+                    parentComment.setChildren(new ArrayList<>());
+                }
+                // 把当前评论添加到父评论的 children 里
+                parentComment.getChildren().add(comment);
+            } else {
+                // 父评论不存在时，不丢数据，直接当成一级评论返回
+                rootComments.add(comment);
+            }
         }
+        return rootComments;
     }
 
     /**

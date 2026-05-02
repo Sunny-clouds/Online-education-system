@@ -1,6 +1,5 @@
 package com.onik.eduspring.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +14,7 @@ public class DiscussionCommentVo {
     private Long id;
     private String nickname;
     private String avatar;
+    private int role;
     private Long parentId;
     private String content;
     private Long likeCount;

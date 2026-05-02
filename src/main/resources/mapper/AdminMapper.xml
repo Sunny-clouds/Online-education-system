@@ -4,6 +4,9 @@
 
     <!--查询所有用户信息-->
     <select id="getAllUsers" resultType="com.onik.eduspring.vo.UserVo">
-        SELECT u.id,u.username,u.`password`,u.nickname,u.email,u.phone,r.role,u.avatar,u.`status`,u.create_time,u.update_time FROM `user` u LEFT JOIN role r on u.role = r.id order by r.id ,u.id
+        SELECT u.id,u.username,u.`password`,u.nickname,u.email,u.phone,r.role,u.avatar,u.`status`,u.create_time,u.update_time
+        FROM `user` u
+        LEFT JOIN role r on u.role = r.id
+        order by r.id ,u.id
     </select>
 </mapper>
