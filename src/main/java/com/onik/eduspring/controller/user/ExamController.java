@@ -2,7 +2,6 @@ package com.onik.eduspring.controller.user;
 
 import com.onik.eduspring.dto.ExamDto;
 import com.onik.eduspring.dto.PublishExamDto;
-import com.onik.eduspring.entity.StudentPaper;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.ExamActivityService;
 import com.onik.eduspring.service.ExamService;
@@ -84,7 +83,7 @@ public class ExamController {
     @GetMapping("/getScoreByStudentIdAndPaperId/{studentId}/{paperId}")
     @Operation(summary = "查询考试成绩")
     public Result getScoreByStudentIdAndPaperId(@PathVariable Long studentId,@PathVariable Long paperId){
-        StudentPaper score = studentPaperService.getScoreByStudentIdAndPaperId(studentId, paperId);
+        StudentPaperVo score = studentPaperService.getScoreByStudentIdAndPaperId(studentId, paperId);
         log.info("查询考试成绩成功:{}", score);
         return Result.success(score);
     }

@@ -29,7 +29,7 @@ public interface StudentPaperMapper {
      * @param paperId
      * @return
      */
-    StudentPaper getScoreByStudentIdAndPaperId(Long studentId, Long paperId);
+    StudentPaperVo getScoreByStudentIdAndPaperId(Long studentId, Long paperId);
 
     /**
      * 打回学生的考试信息

@@ -46,18 +46,17 @@ public class HomeWorkServiceImpl implements HomeWorkService {
         StudentActivityRecord studentActivityRecord = new StudentActivityRecord();
         BeanUtils.copyProperties(homeWork,studentActivityRecord);
         studentActivityRecord.setScore(activityMapper.getScore(studentActivityRecord.getActivityId()));
-        StudentActivityRecord s1 = studentActivityRecordMapper.getByStuIdAndCourseIdAndActivityId(studentActivityRecord);
-        if(startTime.isBefore(now) && now.isBefore(endTime) && s1 == null){
+        if(startTime.isBefore(now) && now.isBefore(endTime)){
             if(homeWork1 == null){
                 homeWorkMapper.save(homeWork);
+                studentActivityRecordMapper.save(studentActivityRecord);
             }else {
                 homeWorkMapper.update(homeWork);
+                studentActivityRecordMapper.update(studentActivityRecord);
             }
-            studentActivityRecordMapper.save(studentActivityRecord);
         }else {
             throw new RuntimeException("活动未开始或活动已结束....");
         }
-
     }
 
     /**

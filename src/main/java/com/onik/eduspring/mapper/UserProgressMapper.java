@@ -2,6 +2,7 @@ package com.onik.eduspring.mapper;
 
 import com.onik.eduspring.dto.UserProgressDto;
 import com.onik.eduspring.entity.UserProgress;
+import com.onik.eduspring.vo.UserProgressVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -39,5 +40,5 @@ public interface UserProgressMapper {
      * @param userProgressDto
      * @return
      */
-    List<UserProgress> getProgressByStuIdAndVideoId(UserProgressDto userProgressDto);
+    List<UserProgressVo> getProgressByStuIdAndVideoId(UserProgressDto userProgressDto);
 }

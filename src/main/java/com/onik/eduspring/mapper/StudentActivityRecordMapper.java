@@ -31,4 +31,10 @@ public interface StudentActivityRecordMapper {
      * @return
      */
     StudentActivityRecord getByStuIdAndCourseIdAndActivityId(StudentActivityRecord studentActivityRecord);
+
+    /**
+     * 更新学生活动记录
+     * @param studentActivityRecord
+     */
+    void update(StudentActivityRecord studentActivityRecord);
 }

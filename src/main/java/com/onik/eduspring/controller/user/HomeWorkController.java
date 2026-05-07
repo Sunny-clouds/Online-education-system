@@ -29,7 +29,7 @@ public class HomeWorkController {
      */
     @PostMapping("/getAll")
     @Operation(summary = "获取所有作业")
-    @PreAuthorize("hasAnyAuthority('admin','teacher')")
+    @PreAuthorize("hasAnyAuthority('teacher')")
     public Result getAll(@RequestBody HomeWorkDto homeWorkDto){
         List<HomeWorkVo> homeWork = homeWorkService.getAll(homeWorkDto);
         return Result.success(homeWork);

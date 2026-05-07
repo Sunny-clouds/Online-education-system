@@ -33,7 +33,7 @@
     </select>
 
     <!--根据学生id和视频id查询用户课程进度-->
-    <select id="getProgressByStuIdAndVideoId" resultType="com.onik.eduspring.entity.UserProgress">
+    <select id="getProgressByStuIdAndVideoId" resultType="com.onik.eduspring.vo.UserProgressVo">
         SELECT u.id,u.student_id,u.video_id,u.progress
         FROM user_video_progress u
         LEFT JOIN course_resource c on u.video_id = c.id

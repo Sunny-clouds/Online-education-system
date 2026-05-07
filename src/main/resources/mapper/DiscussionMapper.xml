@@ -31,7 +31,8 @@
         LEFT JOIN `user` u on d.user_id = u.id
         left join course c on d.course_id = c.id
         LEFT JOIN discussion_comment dc ON dc.post_id = d.id
-        GROUP BY d.id
+        GROUP BY d.id,d.create_time
+        ORDER BY d.create_time DESC
     </select>
 
     <!--根据课程名称查询帖子-->
@@ -51,7 +52,6 @@
         FROM discussion_comment c
         LEFT JOIN user u ON c.user_id = u.id
         WHERE c.post_id = #{id}
-        ORDER BY c.create_time ASC,c.id desc
     </select>
 
 </mapper>

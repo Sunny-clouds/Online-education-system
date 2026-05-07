@@ -34,7 +34,7 @@ public class StudentPaperServiceImpl implements StudentPaperService {
      * @return
      */
     @Override
-    public StudentPaper getScoreByStudentIdAndPaperId(Long studentId, Long paperId) {
+    public StudentPaperVo getScoreByStudentIdAndPaperId(Long studentId, Long paperId) {
         return studentPaperMapper.getScoreByStudentIdAndPaperId(studentId,paperId);
     }
 

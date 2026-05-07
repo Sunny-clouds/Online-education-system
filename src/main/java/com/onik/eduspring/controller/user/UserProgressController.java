@@ -2,9 +2,9 @@ package com.onik.eduspring.controller.user;
 
 
 import com.onik.eduspring.dto.UserProgressDto;
-import com.onik.eduspring.entity.UserProgress;
 import com.onik.eduspring.result.Result;
 import com.onik.eduspring.service.UserProgressService;
+import com.onik.eduspring.vo.UserProgressVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +49,7 @@ public class UserProgressController {
     @PostMapping("/getProgress")
     @Operation(summary = "获取用户每个视频进度")
     public Result getProgress(@RequestBody UserProgressDto userProgressDto) {
-        List<UserProgress> progress = userProgressService.getProgressByStuIdAndVideoId(userProgressDto);
+        List<UserProgressVo> progress = userProgressService.getProgressByStuIdAndVideoId(userProgressDto);
         log.info("获取用户课程进度:{}",userProgressDto);
         return Result.success(progress);
     }

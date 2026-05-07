@@ -25,4 +25,11 @@
         select * from student_activity_record
         where student_id=#{studentId} and activity_id=#{activityId} and course_id=#{courseId}
     </select>
+
+    <!--更新学生活动记录-->
+    <update id="update">
+        update student_activity_record
+        set score=#{score},submit_time=#{submitTime}
+        where student_id=#{studentId} and activity_id=#{activityId} and course_id=#{courseId}
+    </update>
 </mapper>

@@ -3,7 +3,7 @@
 <mapper namespace="com.onik.eduspring.mapper.ActivityMapper">
 
     <!--根据课程id查询所有活动信息-->
-    <select id="getAllById">
+    <select id="getAllById" resultType="com.onik.eduspring.vo.ActivityVo">
         select a.id,a.biz_id, a.title, a.score, a.create_time,a.type,a.status,a.start_time,a.end_time,
                COUNT(ar.id) AS comment_count ,count(sp.student_id) as exam_sum ,count(hw.id) as homework_sum
         from activity a
@@ -15,7 +15,7 @@
     </select>
 
     <!--发布活动-->
-    <insert id="save">
+    <insert id="save" parameterType="com.onik.eduspring.entity.Activity">
         insert into activity(biz_id,course_id,title, score,create_time,type,status,start_time,end_time)
         values(#{bizId},#{courseId},#{title}, #{score},#{createTime},#{type},#{status},#{startTime},#{endTime})
     </insert>
@@ -32,7 +32,7 @@
     </insert>
 
     <!--根据活动id查看活动的评论-->
-    <select id="getCommentById">
+    <select id="getCommentById" resultType="com.onik.eduspring.vo.ActivityCommentVo">
         select a.id, u.nickname,u.avatar ,a.submit_time,a.content
         from activity_discussion_record a
         left JOIN `user` u ON u.id = a.student_id
@@ -40,18 +40,18 @@
     </select>
 
     <!--根据活动id查询活动分数-->
-    <select id="getScore">
+    <select id="getScore" resultType="java.lang.Long">
         select score from activity where id = #{activityId}
     </select>
 
     <!--根据学生id查询学生是否参与过该活动-->
-    <select id="getByActivityId">
+    <select id="getByActivityId" resultType="com.onik.eduspring.entity.ActivityDiscussionRecord">
         select * from activity_discussion_record
         where student_id = #{studentId} and activity_id = #{activityId}
     </select>
 
     <!--根据活动id获取结束时间-->
-    <select id="getEndTime">
+    <select id="getEndTime" resultType="java.time.LocalDateTime">
         select end_time from activity where id = #{id}
     </select>
 
@@ -61,12 +61,13 @@
         where id = #{id} and status != 0
     </update>
 
-    <!--根据活动id获取课程id-->
-    <select id="getStartTime">
+    <!--根据活动id获取活动开始时间-->
+    <select id="getStartTime" resultType="java.time.LocalDateTime">
         select start_time from activity where id = #{activityId}
     </select>
 
-    <select id="getCourseIdById">
+    <!--根据活动id获取课程id-->
+    <select id="getCourseIdById" resultType="java.lang.Long">
         select course_id from activity where id = #{activityId}
     </select>
 </mapper>

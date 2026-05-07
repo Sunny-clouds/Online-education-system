@@ -1,7 +1,7 @@
 package com.onik.eduspring.service;
 
 import com.onik.eduspring.dto.UserProgressDto;
-import com.onik.eduspring.entity.UserProgress;
+import com.onik.eduspring.vo.UserProgressVo;
 
 import java.util.List;
 
@@ -18,5 +18,5 @@ public interface UserProgressService {
      * @param userProgressDto
      * @return
      */
-    List<UserProgress> getProgressByStuIdAndVideoId(UserProgressDto userProgressDto);
+    List<UserProgressVo> getProgressByStuIdAndVideoId(UserProgressDto userProgressDto);
 }

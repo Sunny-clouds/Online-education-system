@@ -8,6 +8,7 @@ import com.onik.eduspring.mapper.UserMapper;
 import com.onik.eduspring.mapper.UserProgressMapper;
 import com.onik.eduspring.service.UserProgressService;
 import com.onik.eduspring.util.BaseContext;
+import com.onik.eduspring.vo.UserProgressVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class UserProgressServiceImpl implements UserProgressService {
             }else if (p > progress) {
                 userProgressMapper.update(userProgress);
             }
-            List<UserProgress> list = getProgressByStuIdAndVideoId(userProgressDto);
+            List<UserProgressVo> list = getProgressByStuIdAndVideoId(userProgressDto);
             Integer size = courseResourceMapper.getSizeByCourseId(userProgressDto.getCourseId());
             userProgressDto.setProgress( list.size() * 100.0 / size);
             userProgressDto.setStatus(userProgressDto.getProgress() > 90 ? 2 : 1);
@@ -69,6 +70,8 @@ public class UserProgressServiceImpl implements UserProgressService {
             //    userProgressDto.setStatus(userProgressDto.getProgress() > 90 ? 2 : 1);
             //
             //}
+        }else {
+            throw new RuntimeException("权限不足");
         }
     }
 
@@ -78,7 +81,7 @@ public class UserProgressServiceImpl implements UserProgressService {
      * @return
      */
     @Override
-    public List<UserProgress> getProgressByStuIdAndVideoId(UserProgressDto userProgressDto) {
+    public List<UserProgressVo> getProgressByStuIdAndVideoId(UserProgressDto userProgressDto) {
         userProgressDto.setStudentId(BaseContext.getUserId());
         return userProgressMapper.getProgressByStuIdAndVideoId(userProgressDto);
     }

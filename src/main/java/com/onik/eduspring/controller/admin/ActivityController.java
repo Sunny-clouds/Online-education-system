@@ -43,7 +43,7 @@ public class ActivityController {
      * 发布活动信息
      * @return
      */
-    @PreAuthorize("hasAnyAuthority('admin','teacher')")
+    @PreAuthorize("hasAnyAuthority('teacher')")
     @PostMapping("/save")
     @Operation(summary = "发布活动信息")
     public Result save(@RequestBody ActivityDto activityDto){
@@ -56,7 +56,7 @@ public class ActivityController {
      * 删除活动信息
      * @return
      */
-    @PreAuthorize("hasAnyAuthority('admin','teacher')")
+    @PreAuthorize("hasAnyAuthority('teacher')")
     @DeleteMapping("/delById/{id}")
     @Operation(summary = "删除活动信息")
     public Result delById(@PathVariable Long id){
@@ -93,7 +93,7 @@ public class ActivityController {
      * @return
      */
     @Operation(summary = "修改活动开始和结束时间")
-    @PreAuthorize("hasAnyAuthority('admin','teacher')")
+    @PreAuthorize("hasAnyAuthority('teacher')")
     @PutMapping("/setStartAndEndTime")
     public Result setStartAndEndTime(@RequestBody ActivityDto activityDto){
         activityService.setStartAndEndTime(activityDto);
